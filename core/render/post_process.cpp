@@ -650,13 +650,16 @@ namespace gleam
 			for (int s = 0; s < 4; ++s)
 			{
 				int n = 1;
-				color_coeff1st[s] = star_modulation1st[s] * std::pow(DEC, std::pow(4.0f, n - 1) * s);
+				color_coeff1st[s] = star_modulation1st[s];
+				color_coeff1st[s] *= std::pow(DEC, std::pow(4.0f, n - 1) * s);
 
 				n = 2;
-				color_coeff2nd[s] = star_modulation2nd[s] * std::pow(DEC, std::pow(4.0f, n - 1) * s);
+				color_coeff2nd[s] = star_modulation2nd[s];
+				color_coeff2nd[s] *= std::pow(DEC, std::pow(4.0f, n - 1) * s);
 
 				n = 3;
-				color_coeff3rd[s] = star_modulation3rd[s] * std::pow(DEC, std::pow(4.0f, n - 1) * s);
+				color_coeff3rd[s] = star_modulation3rd[s];
+				color_coeff3rd[s] *= std::pow(DEC, std::pow(4.0f, n - 1) * s);
 			}
 		}
 	}

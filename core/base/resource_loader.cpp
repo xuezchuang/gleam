@@ -1,4 +1,5 @@
 #include "resource_loader.h"
+#define  _SILENCE_EXPERIMENTAL_FILESYSTEM_DEPRECATION_WARNING
 #include <experimental/filesystem>
 
 #if defined GLEAM_IN_WINDOWS

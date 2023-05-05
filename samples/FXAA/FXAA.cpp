@@ -1,14 +1,14 @@
 #include "FXAA.h"
-#include <base/context.h>
-#include <base/window.h>
-#include <render/mesh.h>
-#include <render/frame_buffer.h>
-#include <render/post_process.h>
-#include <render/view_port.h>
-#include <scene/scene_object.h>
-#include <input/input_engine.h>
-#include <input/input_record.h>
-#include <glm/gtc/matrix_transform.hpp>
+#include "base/context.h"
+#include "base/window.h"
+#include "render/mesh.h"
+#include "render/frame_buffer.h"
+#include "render/post_process.h"
+#include "render/view_port.h"
+#include "scene/scene_object.h"
+#include "input/input_engine.h"
+#include "input/input_record.h"
+#include "glm/gtc/matrix_transform.hpp"
 
 #include <GLFW/glfw3.h>
 
@@ -32,7 +32,7 @@ void LineSphere::OnRenderBegin()
 	*(shader->GetUniformByName("mvp")) = camera.ProjViewMatrix() * this->ModelMatrix();
 }
 
-FxaaMesh::FxaaMesh(const std::string &name, const ModelPtr &model)
+FxaaMesh::FxaaMesh(const std::string &name, const RenderModelPtr&model)
 	: Mesh(name, model)
 {
 	RenderEffectPtr effect = LoadRenderEffect("FXAA.xml");
@@ -140,7 +140,7 @@ void FXAA::OnCreate()
 	line_sphere_so_->ModelMatrix(model);
 	line_sphere_so_->AddToSceneManager();
 
-	ModelPtr loop = LoadModel("loop.obj", EAH_Immutable, CreateModelFunc<Model>(), CreateMeshFunc<FxaaMesh>());
+	RenderModelPtr loop = LoadModel("loop.obj", EAH_Immutable, CreateModelFunc<RenderModel>(), CreateMeshFunc<FxaaMesh>());
 	std::shared_ptr<FxaaSceneObject> loop_fxso[2];
 	loop_fxso[0] = std::make_shared<FxaaSceneObject>(loop, SOA_Cullable);
 	loop_fxso[1] = std::make_shared<FxaaSceneObject>(loop, SOA_Cullable);
@@ -156,7 +156,7 @@ void FXAA::OnCreate()
 
 	//glLineWidth(2.0f);
 	
-	ModelPtr triangle = LoadModel("triangle.obj", EAH_Immutable, CreateModelFunc<Model>(), CreateMeshFunc<FxaaMesh>());
+	RenderModelPtr triangle = LoadModel("triangle.obj", EAH_Immutable, CreateModelFunc<RenderModel>(), CreateMeshFunc<FxaaMesh>());
 	std::shared_ptr<FxaaSceneObject> triangle_fxso = std::make_shared<FxaaSceneObject>(triangle, SOA_Cullable);
 	triangle_fxso->SetColor(glm::vec4(0.5f, 0.9f, 0.5f, 1.0f));
 	triangle_fxso->ModelMatrix(glm::translate(glm::mat4(), glm::vec3(0, -0.3f, 0)) * glm::scale(glm::mat4(), glm::vec3(0.03f)));

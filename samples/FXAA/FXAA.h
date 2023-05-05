@@ -1,12 +1,12 @@
 #pragma once
 #ifndef SAMPLE_FXAA_H_
 #define SAMPLE_FXAA_H_
-
-#include <base/framework.h>
-#include <render/camera_controller.h>
-#include <render/renderable.h>
-#include <render/mesh.h>
-#include <scene/scene_object.h>
+#include "gleam.h"
+#include "base/framework.h"
+#include "render/camera_controller.h"
+#include "render/renderable.h"
+#include "render/mesh.h"
+#include "scene/scene_object.h"
 using namespace gleam;
 
 class LineSphere : public RenderableHelper
@@ -34,7 +34,7 @@ private:
 class FxaaMesh : public Mesh
 {
 public:
-	FxaaMesh(const std::string &name, const ModelPtr &model);
+	FxaaMesh(const std::string &name, const RenderModelPtr&model);
 	void OnRepeatRenderBegin(uint32_t i) override;
 	void OnRenderBegin() override;
 };
