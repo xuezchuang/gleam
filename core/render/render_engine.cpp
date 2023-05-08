@@ -806,12 +806,14 @@ namespace gleam {
 		return std::make_shared<OGLTexture1D>(width, num_mip_maps, format, sample_count, access_hint);
 	}
 
-	TexturePtr OGLRenderEngine::MakeTextureHandler2D(uint32_t width, uint32_t height, uint32_t num_mip_maps, ElementFormat format, uint32_t sample_count, uint32_t access_hint)
+	TexturePtr OGLRenderEngine::MakeTextureHandler2D(uint32_t width, uint32_t height, uint32_t num_mip_maps, ElementFormat format,
+		uint32_t sample_count, uint32_t access_hint)
 	{
 		return std::make_shared<OGLTexture2D>(width, height, num_mip_maps, format, sample_count, access_hint);
 	}
 
-	TexturePtr OGLRenderEngine::MakeTextureHandler2DArray(uint32_t array_size, uint32_t width, uint32_t height, uint32_t num_mip_maps, ElementFormat format, uint32_t sample_count, uint32_t access_hint)
+	TexturePtr OGLRenderEngine::MakeTextureHandler2DArray(uint32_t array_size, uint32_t width, uint32_t height, uint32_t num_mip_maps, ElementFormat format,
+		uint32_t sample_count, uint32_t access_hint)
 	{
 		return std::make_shared<OGLTexture2DArray>(array_size, width, height, num_mip_maps, format, sample_count, access_hint);
 	}
@@ -851,7 +853,8 @@ namespace gleam {
 	{
 		return std::make_shared<OGLSamplerStateObject>(desc);
 	}
-	RenderStateObjectPtr OGLRenderEngine::DoMakeRenderStateObject(const RasterizerStateDesc & raster_state, const DepthStencilStateDesc & depth_stencil_state, const BlendStateDesc & blend_state)
+	RenderStateObjectPtr OGLRenderEngine::DoMakeRenderStateObject(const RasterizerStateDesc & raster_state, 
+		const DepthStencilStateDesc & depth_stencil_state, const BlendStateDesc & blend_state)
 	{
 		return std::make_shared<OGLRenderStateObject>(raster_state, depth_stencil_state, blend_state);
 	}
@@ -1030,7 +1033,8 @@ namespace gleam {
 		}
 		return sampler_state;
 	}
-	RenderStateObjectPtr RenderEngine::MakeRenderStateObject(const RasterizerStateDesc & raster_state, const DepthStencilStateDesc & depth_stencil_state, const BlendStateDesc & blend_state)
+	RenderStateObjectPtr RenderEngine::MakeRenderStateObject(const RasterizerStateDesc & raster_state, const DepthStencilStateDesc & depth_stencil_state, 
+		const BlendStateDesc & blend_state)
 	{
 		RenderStateObjectPtr render_state;
 
@@ -1144,25 +1148,29 @@ namespace gleam {
 		current_frame_buffer_.reset();
 		screen_frame_buffer_.reset();
 	}
-	TexturePtr RenderEngine::MakeTexture1D(uint32_t width, uint32_t num_mip_maps, ElementFormat format, uint32_t sample_count, uint32_t access_hint, ArrayRef<ElementInitData> init_data)
+	TexturePtr RenderEngine::MakeTexture1D(uint32_t width, uint32_t num_mip_maps, ElementFormat format, uint32_t sample_count, 
+		uint32_t access_hint, ArrayRef<ElementInitData> init_data)
 	{
 		TexturePtr texture = this->MakeTextureHandler1D(width, num_mip_maps, format, sample_count, access_hint);
 		texture->CreateResource(init_data);
 		return texture;
 	}
-	TexturePtr RenderEngine::MakeTexture2D(uint32_t width, uint32_t height, uint32_t num_mip_maps, ElementFormat format, uint32_t sample_count, uint32_t access_hint, ArrayRef<ElementInitData> init_data)
+	TexturePtr RenderEngine::MakeTexture2D(uint32_t width, uint32_t height, uint32_t num_mip_maps, ElementFormat format, uint32_t sample_count,
+		uint32_t access_hint, ArrayRef<ElementInitData> init_data)
 	{
 		TexturePtr texture = this->MakeTextureHandler2D(width, height, num_mip_maps, format, sample_count, access_hint);
 		texture->CreateResource(init_data);
 		return texture;
 	}
-	TexturePtr RenderEngine::MakeTexture2DArray(uint32_t array_size, uint32_t width, uint32_t height, uint32_t num_mip_maps, ElementFormat format, uint32_t sample_count, uint32_t access_hint, ArrayRef<ElementInitData> init_data)
+	TexturePtr RenderEngine::MakeTexture2DArray(uint32_t array_size, uint32_t width, uint32_t height, uint32_t num_mip_maps, ElementFormat format,
+		uint32_t sample_count, uint32_t access_hint, ArrayRef<ElementInitData> init_data)
 	{
 		TexturePtr texture = this->MakeTextureHandler2DArray(array_size, width, height, num_mip_maps, format, sample_count, access_hint);
 		texture->CreateResource(init_data);
 		return texture;
 	}
-	TexturePtr RenderEngine::MakeTextureCube(uint32_t width, uint32_t num_mip_maps, ElementFormat format, uint32_t sample_count, uint32_t access_hint, ArrayRef<ElementInitData> init_data)
+	TexturePtr RenderEngine::MakeTextureCube(uint32_t width, uint32_t num_mip_maps, ElementFormat format, uint32_t sample_count, uint32_t access_hint,
+		ArrayRef<ElementInitData> init_data)
 	{
 		TexturePtr texture = this->MakeTextureHandlerCube(width, num_mip_maps, format, sample_count, access_hint);
 		texture->CreateResource(init_data);

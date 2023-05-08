@@ -112,7 +112,7 @@ void InstanceAPP::OnCreate()
 		grass_so_->SetRotation(rotations_[i]);
 		grass_so_->AddToSceneManager();
 	}
-
+	
 	{
 		float app_time_record = 0;
 		std::function<int(float, float)> update_title = [=](float app_time, float elapsed_time)mutable ->int  {

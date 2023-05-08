@@ -42,7 +42,7 @@ namespace gleam
 		void Create();
 		void Destroy();
 
-		uint32_t RegisterAfterFrameFunc(const std::function<int(float, float)> &func);
+		uint32_t RegisterAfterFrameFunc(std::function<int(float, float)> &&func);
 		void	 UnregisterAfterFrameFunc(uint32_t index);
 		void	 RunAfterFrame();
 

@@ -103,7 +103,7 @@ namespace gleam {
 		this->ActiveCamera().ProjParams(re.DefaultFOV(), static_cast<float>(buffer.Width()) / buffer.Height(),
 			nearPlane, farPlane);
 	}
-	uint32_t Framework3D::RegisterAfterFrameFunc(const std::function<int(float, float)>& func)
+	uint32_t Framework3D::RegisterAfterFrameFunc(std::function<int(float, float)>&& func)
 	{
 		assert(func != nullptr);
 		for (size_t i = 0; i < run_after_frame_.size(); ++i)

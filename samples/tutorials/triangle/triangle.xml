@@ -14,7 +14,7 @@ void main()
 }
       ]]>
     </code>
-  </shader>
+	</shader>
 	
 	<shader type="fragment_shader" name="TriangleFS">
     <code>
