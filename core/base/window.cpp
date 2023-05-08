@@ -84,7 +84,7 @@ namespace gleam {
 		glfwSetCursorPosCallback(wnd_, cursor_position_callback);
 		glfwSetScrollCallback(wnd_, scroll_callback);
 		glfwSetMouseButtonCallback(wnd_, mouse_button_callback);
-		glfwSwapInterval(0);
+		glfwSwapInterval(1);
 		glewExperimental = GL_TRUE;
 		glewInit();
 		return true;

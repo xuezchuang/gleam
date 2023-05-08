@@ -27,7 +27,7 @@ namespace gleam {
 	{
 		assert(vbo_ == 0);
 		glCreateBuffers(1, &vbo_);
-
+		//glGenBuffers(1, &vbo_);
 		GLenum usage;
 		if (usage_ == BU_Static)
 		{

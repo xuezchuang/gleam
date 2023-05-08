@@ -1,0 +1,235 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="core\base\bbox.cpp" />
+    <ClCompile Include="core\base\color.inl" />
+    <ClCompile Include="core\base\half.cpp" />
+    <ClCompile Include="core\base\resource_loader.cpp" />
+    <ClCompile Include="core\input\input_engine.cpp" />
+    <ClCompile Include="core\render\camera_controller.cpp" />
+    <ClCompile Include="core\render\camera.cpp" />
+    <ClCompile Include="core\render\compute_renderable.cpp" />
+    <ClCompile Include="core\render\element_format.cpp" />
+    <ClCompile Include="core\render\light.cpp" />
+    <ClCompile Include="core\render\ogl_util.cpp" />
+    <ClCompile Include="core\render\post_process.cpp" />
+    <ClCompile Include="core\render\query.cpp" />
+    <ClCompile Include="core\scene\scene_manager.cpp" />
+    <ClCompile Include="core\scene\scene_object.cpp" />
+    <ClCompile Include="core\render\shader_object.cpp" />
+    <ClCompile Include="core\render\texture.cpp" />
+    <ClCompile Include="core\render\uniform.cpp" />
+    <ClCompile Include="core\render\view_port.cpp" />
+    <ClCompile Include="core\scene\vector_scene.cpp" />
+    <ClCompile Include="core\render\render_effect.cpp">
+      <Filter>02 render</Filter>
+    </ClCompile>
+    <ClCompile Include="core\render\render_engine.cpp">
+      <Filter>02 render</Filter>
+    </ClCompile>
+    <ClCompile Include="core\render\render_layout.cpp">
+      <Filter>02 render</Filter>
+    </ClCompile>
+    <ClCompile Include="core\render\render_state.cpp">
+      <Filter>02 render</Filter>
+    </ClCompile>
+    <ClCompile Include="core\render\render_view.cpp">
+      <Filter>02 render</Filter>
+    </ClCompile>
+    <ClCompile Include="core\render\renderable.cpp">
+      <Filter>02 render</Filter>
+    </ClCompile>
+    <ClCompile Include="core\base\context.cpp">
+      <Filter>99 frame</Filter>
+    </ClCompile>
+    <ClCompile Include="core\base\framework.cpp">
+      <Filter>99 frame</Filter>
+    </ClCompile>
+    <ClCompile Include="core\render\mapping.cpp">
+      <Filter>01 base</Filter>
+    </ClCompile>
+    <ClCompile Include="core\base\math.cpp">
+      <Filter>01 base</Filter>
+    </ClCompile>
+    <ClCompile Include="core\render\mesh.cpp">
+      <Filter>01 base</Filter>
+    </ClCompile>
+    <ClCompile Include="core\base\window.cpp">
+      <Filter>99 frame</Filter>
+    </ClCompile>
+    <ClCompile Include="external\include\tinyXML\tinyxmlparser.cpp">
+      <Filter>70 tingyxml</Filter>
+    </ClCompile>
+    <ClCompile Include="external\include\tinyXML\tinystr.cpp">
+      <Filter>70 tingyxml</Filter>
+    </ClCompile>
+    <ClCompile Include="external\include\tinyXML\tinyxml.cpp">
+      <Filter>70 tingyxml</Filter>
+    </ClCompile>
+    <ClCompile Include="external\include\tinyXML\tinyxmlerror.cpp">
+      <Filter>70 tingyxml</Filter>
+    </ClCompile>
+    <ClCompile Include="core\render\graphics_buffer.cpp">
+      <Filter>03 buffer</Filter>
+    </ClCompile>
+    <ClCompile Include="core\render\frame_buffer.cpp">
+      <Filter>03 buffer</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="core\base\bbox.h" />
+    <ClInclude Include="core\base\color.hpp" />
+    <ClInclude Include="core\base\half.h" />
+    <ClInclude Include="core\base\resource_loader.h" />
+    <ClInclude Include="core\gleam.h" />
+    <ClInclude Include="core\input\input_engine.h" />
+    <ClInclude Include="core\input\input_record.h" />
+    <ClInclude Include="core\render\camera_controller.h" />
+    <ClInclude Include="core\render\camera.h" />
+    <ClInclude Include="core\render\compute_renderable.h" />
+    <ClInclude Include="core\render\element_format.h" />
+    <ClInclude Include="core\render\light.h" />
+    <ClInclude Include="core\render\ogl_util.h" />
+    <ClInclude Include="core\render\post_process.h" />
+    <ClInclude Include="core\render\query.h" />
+    <ClInclude Include="core\scene\scene_manager.h" />
+    <ClInclude Include="core\scene\scene_object.h" />
+    <ClInclude Include="core\render\shader_object.h" />
+    <ClInclude Include="core\render\texture.h" />
+    <ClInclude Include="core\render\uniform.h" />
+    <ClInclude Include="core\render\view_port.h" />
+    <ClInclude Include="core\scene\vector_scene.h" />
+    <ClInclude Include="core\util\hash.h" />
+    <ClInclude Include="core\util\improved_noise.h" />
+    <ClInclude Include="core\util\noncopyable.hpp" />
+    <ClInclude Include="core\util\timer.h" />
+    <ClInclude Include="external\include\stb_image\stb_image.h" />
+    <ClInclude Include="build\vc14\ridged_multi_fractal.h">
+      <Filter>resource</Filter>
+    </ClInclude>
+    <ClInclude Include="core\util\array_2d.h">
+      <Filter>01 base</Filter>
+    </ClInclude>
+    <ClInclude Include="core\util\array_ref.hpp">
+      <Filter>01 base</Filter>
+    </ClInclude>
+    <ClInclude Include="core\render\render_effect.h">
+      <Filter>02 render</Filter>
+    </ClInclude>
+    <ClInclude Include="core\render\render_engine.h">
+      <Filter>02 render</Filter>
+    </ClInclude>
+    <ClInclude Include="core\render\render_layout.h">
+      <Filter>02 render</Filter>
+    </ClInclude>
+    <ClInclude Include="core\render\render_state.h">
+      <Filter>02 render</Filter>
+    </ClInclude>
+    <ClInclude Include="core\render\render_view.h">
+      <Filter>02 render</Filter>
+    </ClInclude>
+    <ClInclude Include="core\render\renderable.h">
+      <Filter>02 render</Filter>
+    </ClInclude>
+    <ClInclude Include="core\base\context.h">
+      <Filter>99 frame</Filter>
+    </ClInclude>
+    <ClInclude Include="core\base\framework.h">
+      <Filter>99 frame</Filter>
+    </ClInclude>
+    <ClInclude Include="core\render\mesh.h">
+      <Filter>01 base</Filter>
+    </ClInclude>
+    <ClInclude Include="core\render\mapping.h">
+      <Filter>01 base</Filter>
+    </ClInclude>
+    <ClInclude Include="core\render\material.h">
+      <Filter>01 base</Filter>
+    </ClInclude>
+    <ClInclude Include="core\base\math.h">
+      <Filter>01 base</Filter>
+    </ClInclude>
+    <ClInclude Include="core\base\window.h">
+      <Filter>99 frame</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\tinyXML\tinystr.h">
+      <Filter>70 tingyxml</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\tinyXML\tinyxml.h">
+      <Filter>70 tingyxml</Filter>
+    </ClInclude>
+    <ClInclude Include="core\render\graphics_buffer.h">
+      <Filter>03 buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="core\render\frame_buffer.h">
+      <Filter>03 buffer</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="resource\render\AA.xml">
+      <Filter>resource</Filter>
+    </Xml>
+    <Xml Include="resource\render\AA_pp.xml">
+      <Filter>resource</Filter>
+    </Xml>
+    <Xml Include="resource\render\base.xml">
+      <Filter>resource</Filter>
+    </Xml>
+    <Xml Include="resource\render\base_pp.xml">
+      <Filter>resource</Filter>
+    </Xml>
+    <Xml Include="resource\render\blur.xml">
+      <Filter>resource</Filter>
+    </Xml>
+    <Xml Include="resource\render\HDR_pp.xml">
+      <Filter>resource</Filter>
+    </Xml>
+    <Xml Include="resource\render\HDR_util.xml">
+      <Filter>resource</Filter>
+    </Xml>
+    <Xml Include="resource\render\lighting.xml">
+      <Filter>resource</Filter>
+    </Xml>
+    <Xml Include="resource\render\LightPolygon.xml">
+      <Filter>resource</Filter>
+    </Xml>
+    <Xml Include="samples\14_instance\grass.xml">
+      <Filter>resource</Filter>
+    </Xml>
+    <Xml Include="resource\render\downsize.xml">
+      <Filter>resource</Filter>
+    </Xml>
+    <Xml Include="resource\render\renderable.xml">
+      <Filter>resource</Filter>
+    </Xml>
+    <Xml Include="resource\render\shadow.xml">
+      <Filter>resource</Filter>
+    </Xml>
+    <Xml Include="resource\render\skybox.xml">
+      <Filter>resource</Filter>
+    </Xml>
+    <Xml Include="resource\render\tonemapping.xml">
+      <Filter>resource</Filter>
+    </Xml>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="resource">
+      <UniqueIdentifier>{b7908540-ad60-4d18-a65f-010c36ce31e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01 base">
+      <UniqueIdentifier>{ce4238a7-f500-4d25-ac41-c65388674626}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="99 frame">
+      <UniqueIdentifier>{11751a24-816f-4f41-be9d-067d52c2b7d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02 render">
+      <UniqueIdentifier>{a006b837-3445-4035-84f1-72542457555a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03 buffer">
+      <UniqueIdentifier>{1918ea22-c079-407e-8533-5ada16002b82}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="70 tingyxml">
+      <UniqueIdentifier>{ea8268a9-b139-4ef9-8f02-c2c7604547aa}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
