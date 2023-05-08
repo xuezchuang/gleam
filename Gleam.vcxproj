@@ -255,6 +255,11 @@
     </Xml>
     <Xml Include="samples\14_instance\grass.xml" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="resource\render\11.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </None>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

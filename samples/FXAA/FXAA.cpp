@@ -12,6 +12,10 @@
 
 #include <GLFW/glfw3.h>
 
+/************************************************************************/
+/*								LineSphere				                */
+/************************************************************************/
+
 LineSphere::LineSphere(uint32_t num_slice, const glm::vec4 &color, float scale)
 {
 	RenderEngine &re = Context::Instance().RenderEngineInstance();
@@ -31,7 +35,55 @@ void LineSphere::OnRenderBegin()
 
 	*(shader->GetUniformByName("mvp")) = camera.ProjViewMatrix() * this->ModelMatrix();
 }
+void LineSphere::GenLineSphere(uint32_t num_slice, float scale)
+{
+	const uint32_t num_stack = num_slice;
 
+	std::vector<glm::vec3> xyzs;
+	xyzs.reserve((num_slice + 1) * num_stack * 2);
+
+	const float ds = 1.0f / num_slice;
+	const float dt = 1.0f / num_slice;
+	float t = 1.0f, s;
+
+	const float dphi = glm::pi<float>() / num_stack;
+	const float dtheta = 2 * glm::pi<float>() / num_slice;
+
+	for (uint32_t i = 0; i < num_stack; ++i)
+	{
+		const float phi = i * dphi;
+
+		s = 0;
+		for (uint32_t j = 0; j <= num_slice; ++j)
+		{
+			const float theta = (j == num_slice) ? 0 : j * dtheta;
+
+			glm::vec3 xyz(-glm::sin(theta) * glm::sin(phi) * scale,
+				glm::cos(theta) * glm::sin(phi) * scale,
+				-glm::cos(phi) * scale);
+			xyzs.push_back(xyz);
+
+			xyz = glm::vec3(-glm::sin(theta) * glm::sin(phi + dphi) * scale,
+				glm::cos(theta) * glm::sin(phi + dphi) * scale,
+				-glm::cos(phi + dphi) * scale);
+			xyzs.push_back(xyz);
+
+			s += ds;
+		}
+		t -= dt;
+	}
+
+	RenderEngine& re = Context::Instance().RenderEngineInstance();
+	layout_ = re.MakeRenderLayout();
+
+	GraphicsBufferPtr pos_vb = re.MakeVertexBuffer(BU_Static, EAH_GPU_Read | EAH_Immutable, static_cast<uint32_t>(xyzs.size() * sizeof(glm::vec3)), xyzs.data());
+	layout_->BindVertexStream(pos_vb, VertexElement(VEU_Position, 0, EF_BGR32F));
+	layout_->TopologyType(TT_LineList);
+}
+
+/************************************************************************/
+/*								FxaaMesh				                */
+/************************************************************************/
 FxaaMesh::FxaaMesh(const std::string &name, const RenderModelPtr&model)
 	: Mesh(name, model)
 {
@@ -69,54 +121,10 @@ void FxaaMesh::OnRenderBegin()
 	*(shader.GetUniformByName("color")) = color;
 }
 
-void LineSphere::GenLineSphere(uint32_t num_slice, float scale)
-{
-	const uint32_t num_stack = num_slice;
-
-	std::vector<glm::vec3> xyzs;
-	xyzs.reserve((num_slice + 1) * num_stack * 2);
-
-	const float ds = 1.0f / num_slice;
-	const float dt = 1.0f / num_slice;
-	float t = 1.0f, s;
-
-	const float dphi = glm::pi<float>() / num_stack;
-	const float dtheta = 2 * glm::pi<float>() / num_slice;
-
-	for (uint32_t i = 0; i < num_stack; ++i)
-	{
-		const float phi = i * dphi;
-
-		s = 0;
-		for (uint32_t j = 0; j <= num_slice; ++j)
-		{
-			const float theta = (j == num_slice) ? 0 : j * dtheta;
-
-			glm::vec3 xyz(-glm::sin(theta) *  glm::sin(phi) * scale,
-						   glm::cos(theta) *  glm::sin(phi) * scale,
-						                     -glm::cos(phi) * scale);
-			xyzs.push_back(xyz);
-
-			xyz = glm::vec3(-glm::sin(theta) *  glm::sin(phi + dphi) * scale,
-							 glm::cos(theta) *  glm::sin(phi + dphi) * scale,
-											   -glm::cos(phi + dphi) * scale);
-			xyzs.push_back(xyz);
-
-			s += ds;
-		}
-		t -= dt;
-	}
-
-	RenderEngine &re = Context::Instance().RenderEngineInstance();
-	layout_ = re.MakeRenderLayout();
-
-	GraphicsBufferPtr pos_vb = re.MakeVertexBuffer(BU_Static, EAH_GPU_Read | EAH_Immutable, static_cast<uint32_t>(xyzs.size() * sizeof(glm::vec3)), xyzs.data());
-	layout_->BindVertexStream(pos_vb, VertexElement(VEU_Position, 0, EF_BGR32F));
-	layout_->TopologyType(TT_LineList);
-}
-
-FXAA::FXAA()
-	: Framework3D("FXAA Sample. open(close) FXAA -- space key")
+/************************************************************************/
+/*								FXAA					                */
+/************************************************************************/
+FXAA::FXAA(): Framework3D("FXAA Sample. open(close) FXAA -- space key")
 {
 	ResLoader::Instance().AddPath("../../samples/FXAA");
 	ResLoader::Instance().AddPath("../../resource/common/fxaa");
@@ -147,8 +155,7 @@ void FXAA::OnCreate()
 	loop_fxso[0]->ModelMatrix(glm::scale(glm::mat4(), glm::vec3(0.04f)));
 	loop_fxso[0]->SetColor(glm::vec4(0.5f, 0.5f, 0.8f, 1.0f));
 	loop_fxso[1]->SetColor(glm::vec4(0.5f, 0.5f, 0.8f, 1.0f));
-	loop_fxso[1]->ModelMatrix(glm::scale(glm::mat4(), glm::vec3(0.04f)) *
-		glm::rotate(glm::mat4(), glm::pi<float>() * 0.5f, glm::vec3(1.0f, 0, 0)));
+	loop_fxso[1]->ModelMatrix(glm::scale(glm::mat4(), glm::vec3(0.04f)) * glm::rotate(glm::mat4(), glm::pi<float>() * 0.5f, glm::vec3(1.0f, 0, 0)));
 	loop_so_[0] = loop_fxso[0];
 	loop_so_[1] = loop_fxso[1];
 	loop_so_[0]->AddToSceneManager();
@@ -232,6 +239,11 @@ uint32_t FXAA::DoUpdate(uint32_t render_index)
 	}
 	return 0;
 }
+
+/************************************************************************/
+/*						FxaaSceneObject					                */
+/************************************************************************/
+
 void FxaaSceneObject::SetColor(const glm::vec4 & color)
 {
 	this->color_ = color;
@@ -241,6 +253,10 @@ const glm::vec4 & FxaaSceneObject::GetColor() const
 {
 	return color_;
 }
+
+/************************************************************************/
+/*								main					                */
+/************************************************************************/
 
 int main()
 {

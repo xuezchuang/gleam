@@ -50,13 +50,6 @@ void main()
     <state name="fragment_shader" value="ObjectFS"/>
   </technique>
 
-  <technique name="ObjectTech">
-    <state name="cull_mode" value="back"/>
-
-    <state name="vertex_shader" value="ObjectVS"/>
-    <state name="fragment_shader" value="ObjectFS"/>
-  </technique>
-
   <technique name="FXAAHelperTech" inherit="HelperTec">
     <state name="line_width" value="2"/>
 

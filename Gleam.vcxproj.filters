@@ -5,17 +5,11 @@
     <ClCompile Include="core\base\color.inl" />
     <ClCompile Include="core\base\half.cpp" />
     <ClCompile Include="core\base\resource_loader.cpp" />
-    <ClCompile Include="core\input\input_engine.cpp" />
-    <ClCompile Include="core\render\camera_controller.cpp" />
-    <ClCompile Include="core\render\camera.cpp" />
     <ClCompile Include="core\render\compute_renderable.cpp" />
     <ClCompile Include="core\render\element_format.cpp" />
-    <ClCompile Include="core\render\light.cpp" />
     <ClCompile Include="core\render\ogl_util.cpp" />
     <ClCompile Include="core\render\post_process.cpp" />
     <ClCompile Include="core\render\query.cpp" />
-    <ClCompile Include="core\scene\scene_manager.cpp" />
-    <ClCompile Include="core\scene\scene_object.cpp" />
     <ClCompile Include="core\render\shader_object.cpp" />
     <ClCompile Include="core\render\texture.cpp" />
     <ClCompile Include="core\render\uniform.cpp" />
@@ -75,6 +69,24 @@
     <ClCompile Include="core\render\frame_buffer.cpp">
       <Filter>03 buffer</Filter>
     </ClCompile>
+    <ClCompile Include="core\scene\scene_manager.cpp">
+      <Filter>04 scene</Filter>
+    </ClCompile>
+    <ClCompile Include="core\scene\scene_object.cpp">
+      <Filter>04 scene</Filter>
+    </ClCompile>
+    <ClCompile Include="core\render\light.cpp">
+      <Filter>04 scene</Filter>
+    </ClCompile>
+    <ClCompile Include="core\render\camera.cpp">
+      <Filter>04 scene</Filter>
+    </ClCompile>
+    <ClCompile Include="core\input\input_engine.cpp">
+      <Filter>05 input</Filter>
+    </ClCompile>
+    <ClCompile Include="core\render\camera_controller.cpp">
+      <Filter>04 scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core\base\bbox.h" />
@@ -82,18 +94,11 @@
     <ClInclude Include="core\base\half.h" />
     <ClInclude Include="core\base\resource_loader.h" />
     <ClInclude Include="core\gleam.h" />
-    <ClInclude Include="core\input\input_engine.h" />
-    <ClInclude Include="core\input\input_record.h" />
-    <ClInclude Include="core\render\camera_controller.h" />
-    <ClInclude Include="core\render\camera.h" />
     <ClInclude Include="core\render\compute_renderable.h" />
     <ClInclude Include="core\render\element_format.h" />
-    <ClInclude Include="core\render\light.h" />
     <ClInclude Include="core\render\ogl_util.h" />
     <ClInclude Include="core\render\post_process.h" />
     <ClInclude Include="core\render\query.h" />
-    <ClInclude Include="core\scene\scene_manager.h" />
-    <ClInclude Include="core\scene\scene_object.h" />
     <ClInclude Include="core\render\shader_object.h" />
     <ClInclude Include="core\render\texture.h" />
     <ClInclude Include="core\render\uniform.h" />
@@ -164,6 +169,27 @@
     <ClInclude Include="core\render\frame_buffer.h">
       <Filter>03 buffer</Filter>
     </ClInclude>
+    <ClInclude Include="core\scene\scene_object.h">
+      <Filter>04 scene</Filter>
+    </ClInclude>
+    <ClInclude Include="core\scene\scene_manager.h">
+      <Filter>04 scene</Filter>
+    </ClInclude>
+    <ClInclude Include="core\render\light.h">
+      <Filter>04 scene</Filter>
+    </ClInclude>
+    <ClInclude Include="core\render\camera.h">
+      <Filter>04 scene</Filter>
+    </ClInclude>
+    <ClInclude Include="core\input\input_record.h">
+      <Filter>05 input</Filter>
+    </ClInclude>
+    <ClInclude Include="core\input\input_engine.h">
+      <Filter>05 input</Filter>
+    </ClInclude>
+    <ClInclude Include="core\render\camera_controller.h">
+      <Filter>04 scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="resource\render\AA.xml">
@@ -231,5 +257,16 @@
     <Filter Include="70 tingyxml">
       <UniqueIdentifier>{ea8268a9-b139-4ef9-8f02-c2c7604547aa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04 scene">
+      <UniqueIdentifier>{55010fa5-136e-4843-9f74-ba545325873f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05 input">
+      <UniqueIdentifier>{fdab4332-e998-46c0-ad29-41b4f7a1d994}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="resource\render\11.cpp">
+      <Filter>resource</Filter>
+    </None>
   </ItemGroup>
 </Project>
