@@ -6,13 +6,13 @@
 #include <glm/gtx/matrix_decompose.hpp>
 #include <render/light.h>
 namespace gleam {
-	SceneObject::SceneObject(uint32_t attrib)
+	SceneObject::SceneObject(SceneObjectAttrib attrib)
 		: attrib_(attrib), parent_(nullptr), model_matrix_dirty_(true),
 		instance_data_dirty_(true),
 			model_(glm::mat4()), abs_model_(glm::mat4())
 	{
 	}
-	uint32_t SceneObject::Attrib() const
+	SceneObjectAttrib SceneObject::Attrib() const
 	{
 		return attrib_;
 	}
@@ -103,17 +103,17 @@ namespace gleam {
 			update_func_(*this, app_time, elapsed_time);
 		}
 	}
-	SceneObjectHelper::SceneObjectHelper(uint32_t attrib)
+	SceneObjectHelper::SceneObjectHelper(SceneObjectAttrib attrib)
 		: SceneObject(attrib)
 	{
 	}
-	SceneObjectHelper::SceneObjectHelper(const RenderablePtr & renderable, uint32_t attrib)
+	SceneObjectHelper::SceneObjectHelper(const RenderablePtr & renderable, SceneObjectAttrib attrib)
 		: SceneObject(attrib)
 	{
 		renderable_ = renderable;
 		this->OnAttachRenderable(false);
 	}
-	SceneObjectHelper::SceneObjectHelper(const RenderModelPtr &model, uint32_t attrib)
+	SceneObjectHelper::SceneObjectHelper(const RenderModelPtr &model, SceneObjectAttrib attrib)
 		: SceneObject(attrib), model_(model)
 	{
 		this->OnAttachRenderable(false);

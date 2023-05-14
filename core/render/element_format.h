@@ -65,7 +65,7 @@ namespace gleam
 	template <uint64_t ch0, uint64_t ch1, uint64_t ch2, uint64_t ch3,
 		uint64_t ch0_size, uint64_t ch1_size, uint64_t ch2_size, uint64_t ch3_size,
 		uint64_t ch0_type, uint64_t ch1_type, uint64_t ch2_type, uint64_t ch3_type>
-		struct MakeElementFormat4
+	struct MakeElementFormat4
 	{
 		static uint64_t const value = (ch0 << 0) | (ch1 << 4) | (ch2 << 8) | (ch3 << 12)
 			| (ch0_size << 16) | (ch1_size << 22) | (ch2_size << 28) | (ch3_size << 34)
@@ -75,7 +75,7 @@ namespace gleam
 	template <uint64_t ch0, uint64_t ch1, uint64_t ch2,
 		uint64_t ch0_size, uint64_t ch1_size, uint64_t ch2_size,
 		uint64_t ch0_type, uint64_t ch1_type, uint64_t ch2_type>
-		struct MakeElementFormat3
+	struct MakeElementFormat3
 	{
 		static uint64_t const value = MakeElementFormat4<ch0, ch1, ch2, 0, ch0_size, ch1_size, ch2_size, 0, ch0_type, ch1_type, ch2_type, 0>::value;
 	};
@@ -83,15 +83,13 @@ namespace gleam
 	template <uint64_t ch0, uint64_t ch1,
 		uint64_t ch0_size, uint64_t ch1_size,
 		uint64_t ch0_type, uint64_t ch1_type>
-		struct MakeElementFormat2
+	struct MakeElementFormat2
 	{
 		static uint64_t const value = MakeElementFormat3<ch0, ch1, 0, ch0_size, ch1_size, 0, ch0_type, ch1_type, 0>::value;
 	};
 
-	template <uint64_t ch0,
-		uint64_t ch0_size,
-		uint64_t ch0_type>
-		struct MakeElementFormat1
+	template <uint64_t ch0, uint64_t ch0_size, uint64_t ch0_type>
+	struct MakeElementFormat1
 	{
 		static uint64_t const value = MakeElementFormat2<ch0, 0, ch0_size, 0, ch0_type, 0>::value;
 	};

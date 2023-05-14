@@ -4,9 +4,9 @@
 #include "render_view.h"
 #include "render_engine.h"
 namespace gleam {
-	FrameBuffer::FrameBuffer()
-		: width_(0), height_(0), viewport_(std::make_shared<Viewport>())
+	FrameBuffer::FrameBuffer(): width_(0), height_(0), viewport_(std::make_shared<Viewport>())
 	{
+		assert(this);
 	}
 	FrameBuffer::~FrameBuffer()
 	{

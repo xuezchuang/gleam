@@ -846,8 +846,10 @@ namespace gleam {
 		win_fb->Attach(ATT_DepthStencil, std::make_shared<OGLDefaultColorRenderView>(win->Width(), win->Height(), settings.depth_stencil_format));
 
 		RenderEngine::BindFrameBuffer(win_fb);
-		glGenFramebuffers(1, &fbo_blit_src_);
-		glGenFramebuffers(1, &fbo_blit_dst_);
+		//glGenFramebuffers(1, &fbo_blit_src_);
+		//glGenFramebuffers(1, &fbo_blit_dst_);
+		glCreateFramebuffers(1, &fbo_blit_src_);
+		glCreateFramebuffers(1, &fbo_blit_dst_);
 	}
 	SamplerStateObjectPtr OGLRenderEngine::DoMakeSamplerStateObjece(const SamplerStateDesc & desc)
 	{

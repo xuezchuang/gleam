@@ -34,8 +34,7 @@ public:
 	};
 
 public:
-	RenderPolygon(const std::string &name, const RenderModelPtr &model)
-		: Mesh(name, model)
+	RenderPolygon(const std::string& name, const RenderModelPtr& model) : Mesh(name, model)
 	{
 		oit_effect_ = LoadRenderEffect("oit.xml");
 
@@ -119,8 +118,7 @@ RenderTechnique *RenderPolygon::peeling_peel_tech_ = nullptr;
 RenderTechnique *RenderPolygon::weighted_blended_blend_tech_ = nullptr;
 
 
-OIT::OIT()
-	: Framework3D("OIT Sample.")
+OIT::OIT(): Framework3D("OIT Sample.")
 {
 	ResLoader::Instance().AddPath("../../samples/oit");
 	ResLoader::Instance().AddPath("../../resource/common");

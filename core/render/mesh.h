@@ -77,6 +77,11 @@ namespace gleam
 			meshes_.assign(first, last);
 		}
 
+		void AssignMeshes(std::vector<MeshPtr>&& parm_mesh)
+		{
+			meshes_ = parm_mesh;
+		}
+
 		int32_t NumMeshes() const { return meshes_.size(); }
 		MeshPtr &GetMesh(int32_t index) { return meshes_[index]; }
 

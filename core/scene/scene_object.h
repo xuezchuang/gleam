@@ -27,9 +27,9 @@ namespace gleam
 	class SceneObject : boost::noncopyable, public std::enable_shared_from_this<SceneObject>
 	{
 	public:
-		SceneObject(uint32_t attrib);
+		SceneObject(SceneObjectAttrib attrib);
 		virtual ~SceneObject() {}
-		uint32_t Attrib() const;
+		SceneObjectAttrib Attrib() const;
 
 		SceneObject *Parent() const;
 		void Parent(SceneObject *parent);
@@ -58,7 +58,7 @@ namespace gleam
 		virtual void Update(float app_time, float elapsed_time);
 
 	protected:
-		uint32_t attrib_;
+		SceneObjectAttrib attrib_;
 
 		SceneObject *parent_;
 		std::vector<SceneObjectPtr> children_;
@@ -78,9 +78,9 @@ namespace gleam
 	class SceneObjectHelper : public SceneObject
 	{
 	public:
-		explicit SceneObjectHelper(uint32_t attrib);
-		SceneObjectHelper(const RenderablePtr &renderable, uint32_t attrib);
-		SceneObjectHelper(const RenderModelPtr &model, uint32_t attrib);
+		explicit SceneObjectHelper(SceneObjectAttrib attrib);
+		SceneObjectHelper(const RenderablePtr &renderable, SceneObjectAttrib attrib);
+		SceneObjectHelper(const RenderModelPtr &model, SceneObjectAttrib attrib);
 
 		virtual void OnAttachRenderable(bool add_to_scene) override;
 

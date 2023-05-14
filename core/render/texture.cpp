@@ -811,4 +811,41 @@ namespace gleam {
 			glGenerateTextureMipmap(texture_);
 		glTextureParameteri(texture_, GL_TEXTURE_MAX_LEVEL, num_mip_maps_ - 1);
 	}
+
+	template<typename T>
+	std::pair<glm::tvec3<T>, glm::tvec3<T>> CubeMapViewVector(CubeFaces face)
+	{
+		RenderEngine& re = Context::Instance().RenderEngineInstance();
+
+		glm::tvec3<T> look_dir, up_dir;
+
+		switch (face)
+		{
+		case CF_Positive_X:
+			look_dir = glm::tvec3<T>(1, 0, 0);
+			up_dir = glm::tvec3<T>(0, 1, 0);
+			break;
+		case CF_Negative_X:
+			look_dir = glm::tvec3<T>(-1, 0, 0);
+			up_dir = glm::tvec3<T>(0, 1, 0);
+			break;
+		case CF_Positive_Y:
+			look_dir = glm::tvec3<T>(0, 1, 0);
+			up_dir = glm::tvec3<T>(0, 0, 1);
+			break;
+		case CF_Negative_Y:
+			look_dir = glm::tvec3<T>(0, -1, 0);
+			up_dir = glm::tvec3<T>(0, 0, -1);
+			break;
+		case CF_Positive_Z:
+			look_dir = glm::tvec3<T>(0, 0, 1);
+			up_dir = glm::tvec3<T>(0, 1, 0);
+			break;
+		case CF_Negative_Z:
+			look_dir = glm::tvec3<T>(0, 0, -1);
+			up_dir = glm::tvec3<T>(0, 1, 0);
+			break;
+		}
+		return std::make_pair(look_dir, up_dir);
+	}
 }

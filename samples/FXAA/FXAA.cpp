@@ -80,7 +80,19 @@ void LineSphere::GenLineSphere(uint32_t num_slice, float scale)
 	layout_->BindVertexStream(pos_vb, VertexElement(VEU_Position, 0, EF_BGR32F));
 	layout_->TopologyType(TT_LineList);
 }
+/************************************************************************/
+/*						FxaaSceneObject					                */
+/************************************************************************/
 
+void FxaaSceneObject::SetColor(const glm::vec4& color)
+{
+	this->color_ = color;
+}
+
+const glm::vec4& FxaaSceneObject::GetColor() const
+{
+	return color_;
+}
 /************************************************************************/
 /*								FxaaMesh				                */
 /************************************************************************/
@@ -240,19 +252,7 @@ uint32_t FXAA::DoUpdate(uint32_t render_index)
 	return 0;
 }
 
-/************************************************************************/
-/*						FxaaSceneObject					                */
-/************************************************************************/
 
-void FxaaSceneObject::SetColor(const glm::vec4 & color)
-{
-	this->color_ = color;
-}
-
-const glm::vec4 & FxaaSceneObject::GetColor() const
-{
-	return color_;
-}
 
 /************************************************************************/
 /*								main					                */

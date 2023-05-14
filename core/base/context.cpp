@@ -66,6 +66,7 @@ namespace gleam {
 
 	Context::Context()
 	{
+		//render_engine_ = std::shared_ptr<OGLRenderEngine>();
 		render_engine_ = std::make_unique<OGLRenderEngine>();
 		scene_manager_ = std::make_unique<VectorSM>();
 		input_engine_ = std::make_unique<InputEngine>();

@@ -37,6 +37,8 @@ namespace gleam {
 	void TriangleApp::OnCreate()
 	{
 		polygon_ = std::make_shared<SceneObjectHelper>(std::make_shared<RenderTriangle>(), SOA_Cullable);
+		//polygon_ = std::make_unique<SceneObjectHelper>(std::make_unique<RenderTriangle>(), SOA_Cullable);
+		
 		polygon_->ModelMatrix(glm::mat4());
 		polygon_->AddToSceneManager();
 

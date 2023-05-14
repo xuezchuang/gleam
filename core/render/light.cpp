@@ -6,7 +6,6 @@
 #include <glm/gtx/matrix_decompose.hpp>
 #include "frame_buffer.h"
 #include "view_port.h"
-#include "texture.h"
 #include "camera.h"
 namespace gleam {
 
@@ -150,7 +149,7 @@ namespace gleam {
 	void PointLight::UpdateCameras()
 	{
 		RenderEngine &re = Context::Instance().RenderEngineInstance();
-		const Camera &camera = *re.CurrentFrameBuffer()->GetViewport()->camera;
+		const Camera& camera = *re.CurrentFrameBuffer()->GetViewport()->camera;
 
 		for (int i = 0; i < 6; ++i)
 		{

@@ -170,7 +170,7 @@ namespace gleam {
 
 			}
 
-			model->AssignMeshes(meshes.begin(), meshes.end());
+			model->AssignMeshes(std::move(meshes));
 		}
 
 		void AddSubPath()
@@ -604,7 +604,8 @@ namespace gleam {
 
 		return true;
 	}
-	RenderModelPtr LoadModel(const std::string & name, uint32_t access_hint, std::function<RenderModelPtr(const std::string &)> create_model_func, std::function<MeshPtr(const std::string &, const RenderModelPtr &)> create_mesh_func)
+	RenderModelPtr LoadModel(const std::string & name, uint32_t access_hint, std::function<RenderModelPtr(const std::string &)> create_model_func, 
+		std::function<MeshPtr(const std::string &, const RenderModelPtr &)> create_mesh_func)
 	{
 		return ResLoader::Instance().QueryT<RenderModel>(std::make_shared<ModelLoadingDesc>(name, access_hint, create_model_func, create_mesh_func));
 	}

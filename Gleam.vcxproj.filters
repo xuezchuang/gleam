@@ -4,17 +4,7 @@
     <ClCompile Include="core\base\bbox.cpp" />
     <ClCompile Include="core\base\color.inl" />
     <ClCompile Include="core\base\half.cpp" />
-    <ClCompile Include="core\base\resource_loader.cpp" />
-    <ClCompile Include="core\render\compute_renderable.cpp" />
-    <ClCompile Include="core\render\element_format.cpp" />
-    <ClCompile Include="core\render\ogl_util.cpp" />
-    <ClCompile Include="core\render\post_process.cpp" />
-    <ClCompile Include="core\render\query.cpp" />
-    <ClCompile Include="core\render\shader_object.cpp" />
-    <ClCompile Include="core\render\texture.cpp" />
     <ClCompile Include="core\render\uniform.cpp" />
-    <ClCompile Include="core\render\view_port.cpp" />
-    <ClCompile Include="core\scene\vector_scene.cpp" />
     <ClCompile Include="core\render\render_effect.cpp">
       <Filter>02 render</Filter>
     </ClCompile>
@@ -43,9 +33,6 @@
       <Filter>01 base</Filter>
     </ClCompile>
     <ClCompile Include="core\base\math.cpp">
-      <Filter>01 base</Filter>
-    </ClCompile>
-    <ClCompile Include="core\render\mesh.cpp">
       <Filter>01 base</Filter>
     </ClCompile>
     <ClCompile Include="core\base\window.cpp">
@@ -87,23 +74,45 @@
     <ClCompile Include="core\render\camera_controller.cpp">
       <Filter>04 scene</Filter>
     </ClCompile>
+    <ClCompile Include="core\render\element_format.cpp">
+      <Filter>80 format</Filter>
+    </ClCompile>
+    <ClCompile Include="core\render\query.cpp">
+      <Filter>81 util</Filter>
+    </ClCompile>
+    <ClCompile Include="core\render\post_process.cpp">
+      <Filter>10 postprocess</Filter>
+    </ClCompile>
+    <ClCompile Include="core\base\resource_loader.cpp">
+      <Filter>11 resource</Filter>
+    </ClCompile>
+    <ClCompile Include="core\render\texture.cpp">
+      <Filter>06 textrue</Filter>
+    </ClCompile>
+    <ClCompile Include="core\render\shader_object.cpp">
+      <Filter>07 shaderObject</Filter>
+    </ClCompile>
+    <ClCompile Include="core\render\compute_renderable.cpp">
+      <Filter>02 render</Filter>
+    </ClCompile>
+    <ClCompile Include="core\render\ogl_util.cpp">
+      <Filter>81 util</Filter>
+    </ClCompile>
+    <ClCompile Include="core\scene\vector_scene.cpp">
+      <Filter>20 view</Filter>
+    </ClCompile>
+    <ClCompile Include="core\render\view_port.cpp">
+      <Filter>20 view</Filter>
+    </ClCompile>
+    <ClCompile Include="core\render\mesh.cpp">
+      <Filter>11 resource</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core\base\bbox.h" />
     <ClInclude Include="core\base\color.hpp" />
     <ClInclude Include="core\base\half.h" />
-    <ClInclude Include="core\base\resource_loader.h" />
-    <ClInclude Include="core\gleam.h" />
-    <ClInclude Include="core\render\compute_renderable.h" />
-    <ClInclude Include="core\render\element_format.h" />
-    <ClInclude Include="core\render\ogl_util.h" />
-    <ClInclude Include="core\render\post_process.h" />
-    <ClInclude Include="core\render\query.h" />
-    <ClInclude Include="core\render\shader_object.h" />
-    <ClInclude Include="core\render\texture.h" />
     <ClInclude Include="core\render\uniform.h" />
-    <ClInclude Include="core\render\view_port.h" />
-    <ClInclude Include="core\scene\vector_scene.h" />
     <ClInclude Include="core\util\hash.h" />
     <ClInclude Include="core\util\improved_noise.h" />
     <ClInclude Include="core\util\noncopyable.hpp" />
@@ -141,9 +150,6 @@
     </ClInclude>
     <ClInclude Include="core\base\framework.h">
       <Filter>99 frame</Filter>
-    </ClInclude>
-    <ClInclude Include="core\render\mesh.h">
-      <Filter>01 base</Filter>
     </ClInclude>
     <ClInclude Include="core\render\mapping.h">
       <Filter>01 base</Filter>
@@ -189,6 +195,42 @@
     </ClInclude>
     <ClInclude Include="core\render\camera_controller.h">
       <Filter>04 scene</Filter>
+    </ClInclude>
+    <ClInclude Include="core\render\element_format.h">
+      <Filter>80 format</Filter>
+    </ClInclude>
+    <ClInclude Include="core\gleam.h">
+      <Filter>00 gleam</Filter>
+    </ClInclude>
+    <ClInclude Include="core\render\query.h">
+      <Filter>81 util</Filter>
+    </ClInclude>
+    <ClInclude Include="core\render\post_process.h">
+      <Filter>10 postprocess</Filter>
+    </ClInclude>
+    <ClInclude Include="core\base\resource_loader.h">
+      <Filter>11 resource</Filter>
+    </ClInclude>
+    <ClInclude Include="core\render\texture.h">
+      <Filter>06 textrue</Filter>
+    </ClInclude>
+    <ClInclude Include="core\render\shader_object.h">
+      <Filter>07 shaderObject</Filter>
+    </ClInclude>
+    <ClInclude Include="core\render\compute_renderable.h">
+      <Filter>02 render</Filter>
+    </ClInclude>
+    <ClInclude Include="core\render\ogl_util.h">
+      <Filter>81 util</Filter>
+    </ClInclude>
+    <ClInclude Include="core\render\view_port.h">
+      <Filter>20 view</Filter>
+    </ClInclude>
+    <ClInclude Include="core\scene\vector_scene.h">
+      <Filter>20 view</Filter>
+    </ClInclude>
+    <ClInclude Include="core\render\mesh.h">
+      <Filter>11 resource</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -262,6 +304,30 @@
     </Filter>
     <Filter Include="05 input">
       <UniqueIdentifier>{fdab4332-e998-46c0-ad29-41b4f7a1d994}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="81 util">
+      <UniqueIdentifier>{a11fde91-ecb9-4318-9789-70c206d7c82c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00 gleam">
+      <UniqueIdentifier>{4a912c3b-e43b-4b2e-b90a-99912c9824f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="10 postprocess">
+      <UniqueIdentifier>{5b01942d-ce8c-4316-8925-4917ea262cae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="80 format">
+      <UniqueIdentifier>{4c123d7f-c5e2-4776-84de-a5df366bccac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="11 resource">
+      <UniqueIdentifier>{c355ca66-f548-4b2f-8e59-efe0642de924}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06 textrue">
+      <UniqueIdentifier>{0dd0bd87-0cbf-44e7-9555-6f602b281e3e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="07 shaderObject">
+      <UniqueIdentifier>{f0982888-f0f1-40e6-82e1-0fb393f26b2c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="20 view">
+      <UniqueIdentifier>{bf2fff73-2c8e-4877-adef-c8f63edf375e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
