@@ -23,8 +23,7 @@ private:
 	};
 
 public:
-	GrassSceneObject(const RenderablePtr & renderable)
-		: SceneObjectHelper(renderable, SOA_Cullable)
+	GrassSceneObject(const RenderModelPtr & model): SceneObjectHelper(model, SOA_Cullable)
 	{
 		instance_format_.push_back(VertexElement(VEU_TextureCoord, 1, EF_BGR32F));
 		instance_format_.push_back(VertexElement(VEU_TextureCoord, 2, EF_BGR32F));
@@ -45,8 +44,7 @@ private:
 class GrassInstanceMesh : public Mesh
 {
 public:
-	GrassInstanceMesh(const std::string &name, const ModelPtr &model)
-		: Mesh("GrassInstanceMesh", model)
+	GrassInstanceMesh(const std::string &name, const RenderModelPtr&model): Mesh("GrassInstanceMesh", model)
 	{
 		effect_ = LoadRenderEffect("instance.xml");
 		technique_ = effect_->GetTechniqueByName("GrassInstanceTech");
@@ -83,8 +81,7 @@ private:
 std::vector<glm::vec3> GrassInstanceMesh::instance_color_ = GrassInstanceMesh::InitInstanceColor();
 TexturePtr GrassInstanceMesh::diff_;
 
-InstanceAPP::InstanceAPP()
-	: Framework3D("Instance-sample")
+InstanceAPP::InstanceAPP(): Framework3D("Instance-sample")
 {
 	ResLoader::Instance().AddPath("../../samples/tutorials/instance");
 	ResLoader::Instance().AddPath("../../resource/common/grass");
@@ -101,13 +98,14 @@ void InstanceAPP::OnCreate()
 
 	RenderEngine &re = Context::Instance().RenderEngineInstance();
 
-	ModelPtr grass = LoadModel("grass.obj", EAH_Immutable,
-		CreateModelFunc<Model>(), CreateMeshFunc<GrassInstanceMesh>());
+	RenderModelPtr grass = LoadModel("grass.obj", EAH_Immutable,CreateModelFunc<RenderModel>(), CreateMeshFunc<GrassInstanceMesh>());
 	TexturePtr grass_diff = LoadTexture2D("grass.png", EAH_GPU_Read | EAH_Immutable);
 	GrassInstanceMesh::SetTextureDiffuse(grass_diff);
 	for (uint32_t i = 0; i < MAX_OBJECT; ++i)
 	{
-		auto grass_so_ = std::make_shared<GrassSceneObject>(grass->Subrenderable(0));
+		//teapot_ = std::make_shared<SceneObjectHelper>(teapot_model, SOA_Cullable);
+		//auto grass_so_ = std::make_shared<GrassSceneObject>(grass->Subrenderable(0));
+		auto grass_so_ = std::make_shared<GrassSceneObject>(grass);
 		grass_so_->SetPosition(positions_[i]);
 		grass_so_->SetRotation(rotations_[i]);
 		grass_so_->AddToSceneManager();
@@ -115,18 +113,19 @@ void InstanceAPP::OnCreate()
 	
 	{
 		float app_time_record = 0;
-		std::function<int(float, float)> update_title = [=](float app_time, float elapsed_time)mutable ->int  {
-			if (app_time - app_time_record> 2.0f)
+		std::function<int(float, float)> update_title = [=](float app_time, float elapsed_time)mutable ->int
+		{
+			if (app_time - app_time_record > 2.0f)
 			{
-				RenderEngine &re = Context::Instance().RenderEngineInstance();
-				Framework3D &app = Context::Instance().FrameworkInstance();
+				RenderEngine& re = Context::Instance().RenderEngineInstance();
+				Framework3D& app = Context::Instance().FrameworkInstance();
 				const std::string name = "Instance Sample. FPS : ";
 				re.SetRenderWindowTitle(name + boost::lexical_cast<std::string>(app.FPS()));
 				app_time_record = app_time;
 			}
 			return 1;
 		};
-		this->RegisterAfterFrameFunc(update_title);
+		this->RegisterAfterFrameFunc(std::move(update_title));// std::forward(update_title));
 	}
 }
 

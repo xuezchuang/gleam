@@ -103,18 +103,15 @@ namespace gleam {
 			update_func_(*this, app_time, elapsed_time);
 		}
 	}
-	SceneObjectHelper::SceneObjectHelper(SceneObjectAttrib attrib)
-		: SceneObject(attrib)
+	SceneObjectHelper::SceneObjectHelper(SceneObjectAttrib attrib): SceneObject(attrib)
 	{
 	}
-	SceneObjectHelper::SceneObjectHelper(const RenderablePtr & renderable, SceneObjectAttrib attrib)
-		: SceneObject(attrib)
+	SceneObjectHelper::SceneObjectHelper(const RenderablePtr & renderable, SceneObjectAttrib attrib): SceneObject(attrib)
 	{
 		renderable_ = renderable;
 		this->OnAttachRenderable(false);
 	}
-	SceneObjectHelper::SceneObjectHelper(const RenderModelPtr &model, SceneObjectAttrib attrib)
-		: SceneObject(attrib), model_(model)
+	SceneObjectHelper::SceneObjectHelper(const RenderModelPtr &model, SceneObjectAttrib attrib): SceneObject(attrib), model_(model)
 	{
 		this->OnAttachRenderable(false);
 	}

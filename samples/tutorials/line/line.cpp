@@ -15,8 +15,7 @@ using namespace gleam;
 class RenderPolygon : public Mesh
 {
 public:
-	RenderPolygon(const std::string &name, const ModelPtr &model)
-		: Mesh(name, model)
+	RenderPolygon(const std::string &name, const RenderModelPtr&model): Mesh(name, model)
 	{
 		RenderEffectPtr effect = LoadRenderEffect("renderable.xml");
 		RenderTechnique *technique = effect->GetTechniqueByName("HelperTec");
@@ -49,12 +48,10 @@ protected:
 	{
 		OBBox box(convert_to_obbox(AABBox(glm::vec3(-0.25f, -0.5f, -0.25f), glm::vec3(0.25f, 0, 0.25f))));
 		Color color(1.0f, 0, 0, 1);
-		renderableBox_ = std::make_shared<SceneObjectHelper>(
-			std::make_shared<RenderableBox>(box, color), SOA_Cullable
-			);
+		renderableBox_ = std::make_shared<SceneObjectHelper>(std::make_shared<RenderableBox>(box, color), SOA_Cullable);
 		renderableBox_->AddToSceneManager();
 
-		ModelPtr teapot_model = LoadModel("teapot.obj", EAH_GPU_Read, CreateModelFunc<Model>(), CreateMeshFunc<RenderPolygon>());
+		RenderModelPtr teapot_model = LoadModel("teapot.obj", EAH_GPU_Read, CreateModelFunc<RenderModel>(), CreateMeshFunc<RenderPolygon>());
 		teapot_ = std::make_shared<SceneObjectHelper>(teapot_model, SOA_Cullable);
 		glm::mat4 model = glm::scale(glm::mat4(), glm::vec3(0.005f));
 		model = glm::translate(model, glm::vec3(0, 0.5f, 0));
