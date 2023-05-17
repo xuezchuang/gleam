@@ -10,6 +10,7 @@
 #include <render/mesh.h>
 #include <glm/gtc/matrix_transform.hpp>
 #include <render/texture.h>
+#include <boost/lexical_cast.hpp>
 using namespace gleam;
 
 class TexturedRenderPolygon : public Mesh
@@ -47,19 +48,52 @@ public:
 protected:
 	void OnCreate() override
 	{
-		RenderModelPtr teapot_model = LoadModel("11.obj", EAH_GPU_Read, CreateModelFunc<RenderModel>(), CreateMeshFunc<TexturedRenderPolygon>());
-		teapot_ = std::make_shared<SceneObjectHelper>(teapot_model, SOA_Cullable);
-		//glm::mat4 model = glm::scale(glm::mat4(), glm::vec3(0.02f));
-		glm::mat4 model = glm::scale(glm::mat4(), glm::vec3(1.0));
-		//model = glm::translate(model, glm::vec3(0, -50.0f, 0));
-		teapot_->ModelMatrix(model);
-		teapot_->AddToSceneManager();
+		bool btest = false;
+		btest = true;
+		if (btest)
+		{
+			RenderModelPtr teapot_model = LoadModel("11.obj", EAH_GPU_Read, CreateModelFunc<RenderModel>(), CreateMeshFunc<TexturedRenderPolygon>());
+			teapot_ = std::make_shared<SceneObjectHelper>(teapot_model, SOA_Cullable);
+			glm::mat4 model = glm::scale(glm::mat4(), glm::vec3(1.0));
+			teapot_->ModelMatrix(model);
+			teapot_->AddToSceneManager();
 
-		this->LookAt(glm::vec3(2, 0, -2), glm::vec3(0, 0, 0));
-		this->Proj(0.1f, 100);
+			this->LookAt(glm::vec3(2, 0, -2), glm::vec3(0, 0, 0));
+			this->Proj(0.1f, 100);
+		}
+		else
+		{
+			RenderModelPtr teapot_model = LoadModel("teapot.obj", EAH_GPU_Read, CreateModelFunc<RenderModel>(), CreateMeshFunc<TexturedRenderPolygon>());
+			teapot_ = std::make_shared<SceneObjectHelper>(teapot_model, SOA_Cullable);
+			glm::mat4 model = glm::scale(glm::mat4(), glm::vec3(0.02f));
+			model = glm::translate(model, glm::vec3(0, -50.0f, 0));
+			teapot_->ModelMatrix(model);
+			teapot_->AddToSceneManager();
+
+			this->LookAt(glm::vec3(2, 0, -2), glm::vec3(0, 0, 0));
+			this->Proj(0.1f, 100);
+		}
+
 
 		controller.AttachCamera(this->ActiveCamera());
 		//controller.SetScalers(0.01f, 0.05f);
+
+		this->RegisterAfterFrameFunc([&](float app_time, float elapsed_time) -> int {
+			static float acc_time = 0;
+			static int32_t frames = 0;
+			++frames;
+			acc_time += elapsed_time;
+
+			if (acc_time > 1.0f)
+			{
+				RenderEngine& re = Context::Instance().RenderEngineInstance();
+				re.SetRenderWindowTitle(std::string("Triangle. FPS : ") + boost::lexical_cast<std::string>(frames));
+				frames = 0;
+				acc_time = 0;
+			}
+			return 0;
+		});
+
 	}
 
 private:

@@ -1,10 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="core\base\bbox.cpp" />
-    <ClCompile Include="core\base\color.inl" />
-    <ClCompile Include="core\base\half.cpp" />
-    <ClCompile Include="core\render\uniform.cpp" />
     <ClCompile Include="core\render\render_effect.cpp">
       <Filter>02 render</Filter>
     </ClCompile>
@@ -107,17 +103,20 @@
     <ClCompile Include="core\render\mesh.cpp">
       <Filter>11 resource</Filter>
     </ClCompile>
+    <ClCompile Include="core\render\uniform.cpp">
+      <Filter>21 uniform</Filter>
+    </ClCompile>
+    <ClCompile Include="core\base\bbox.cpp">
+      <Filter>88</Filter>
+    </ClCompile>
+    <ClCompile Include="core\base\color.inl">
+      <Filter>88</Filter>
+    </ClCompile>
+    <ClCompile Include="core\base\half.cpp">
+      <Filter>88</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="core\base\bbox.h" />
-    <ClInclude Include="core\base\color.hpp" />
-    <ClInclude Include="core\base\half.h" />
-    <ClInclude Include="core\render\uniform.h" />
-    <ClInclude Include="core\util\hash.h" />
-    <ClInclude Include="core\util\improved_noise.h" />
-    <ClInclude Include="core\util\noncopyable.hpp" />
-    <ClInclude Include="core\util\timer.h" />
-    <ClInclude Include="external\include\stb_image\stb_image.h" />
     <ClInclude Include="build\vc14\ridged_multi_fractal.h">
       <Filter>resource</Filter>
     </ClInclude>
@@ -232,6 +231,33 @@
     <ClInclude Include="core\render\mesh.h">
       <Filter>11 resource</Filter>
     </ClInclude>
+    <ClInclude Include="core\render\uniform.h">
+      <Filter>21 uniform</Filter>
+    </ClInclude>
+    <ClInclude Include="core\util\timer.h">
+      <Filter>88</Filter>
+    </ClInclude>
+    <ClInclude Include="core\base\bbox.h">
+      <Filter>88</Filter>
+    </ClInclude>
+    <ClInclude Include="core\base\color.hpp">
+      <Filter>88</Filter>
+    </ClInclude>
+    <ClInclude Include="core\base\half.h">
+      <Filter>88</Filter>
+    </ClInclude>
+    <ClInclude Include="core\util\hash.h">
+      <Filter>88</Filter>
+    </ClInclude>
+    <ClInclude Include="core\util\improved_noise.h">
+      <Filter>88</Filter>
+    </ClInclude>
+    <ClInclude Include="core\util\noncopyable.hpp">
+      <Filter>88</Filter>
+    </ClInclude>
+    <ClInclude Include="external\include\stb_image\stb_image.h">
+      <Filter>88</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="resource\render\AA.xml">
@@ -328,6 +354,12 @@
     </Filter>
     <Filter Include="20 view">
       <UniqueIdentifier>{bf2fff73-2c8e-4877-adef-c8f63edf375e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="21 uniform">
+      <UniqueIdentifier>{c34dcb99-6ce6-4b19-8759-539b8863f411}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="88">
+      <UniqueIdentifier>{67d267ef-97f1-4668-80c8-669631005135}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
