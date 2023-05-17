@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28010.2050
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.33529.622
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Gleam", "Gleam.vcxproj", "{27018355-C13F-4E12-9C23-6BF865228C1B}"
 EndProject
@@ -76,6 +76,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "oit", "build\vc15\oit.vcxpr
 	ProjectSection(ProjectDependencies) = postProject
 		{27018355-C13F-4E12-9C23-6BF865228C1B} = {27018355-C13F-4E12-9C23-6BF865228C1B}
 	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "assimp", "external\assimp\build\code\assimp.vcxproj", "{A554DF33-CE70-3F7D-883A-F6F675475F5B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -329,6 +331,18 @@ Global
 		{0BF5D2A9-524F-487B-90F1-89D95D811088}.RelWithDebInfo|x64.Build.0 = Release|x64
 		{0BF5D2A9-524F-487B-90F1-89D95D811088}.RelWithDebInfo|x86.ActiveCfg = Release|Win32
 		{0BF5D2A9-524F-487B-90F1-89D95D811088}.RelWithDebInfo|x86.Build.0 = Release|Win32
+		{A554DF33-CE70-3F7D-883A-F6F675475F5B}.Debug|x64.ActiveCfg = Debug|x64
+		{A554DF33-CE70-3F7D-883A-F6F675475F5B}.Debug|x64.Build.0 = Debug|x64
+		{A554DF33-CE70-3F7D-883A-F6F675475F5B}.Debug|x86.ActiveCfg = Debug|x64
+		{A554DF33-CE70-3F7D-883A-F6F675475F5B}.MinSizeRel|x64.ActiveCfg = MinSizeRel|x64
+		{A554DF33-CE70-3F7D-883A-F6F675475F5B}.MinSizeRel|x64.Build.0 = MinSizeRel|x64
+		{A554DF33-CE70-3F7D-883A-F6F675475F5B}.MinSizeRel|x86.ActiveCfg = MinSizeRel|x64
+		{A554DF33-CE70-3F7D-883A-F6F675475F5B}.Release|x64.ActiveCfg = Release|x64
+		{A554DF33-CE70-3F7D-883A-F6F675475F5B}.Release|x64.Build.0 = Release|x64
+		{A554DF33-CE70-3F7D-883A-F6F675475F5B}.Release|x86.ActiveCfg = Release|x64
+		{A554DF33-CE70-3F7D-883A-F6F675475F5B}.RelWithDebInfo|x64.ActiveCfg = RelWithDebInfo|x64
+		{A554DF33-CE70-3F7D-883A-F6F675475F5B}.RelWithDebInfo|x64.Build.0 = RelWithDebInfo|x64
+		{A554DF33-CE70-3F7D-883A-F6F675475F5B}.RelWithDebInfo|x86.ActiveCfg = RelWithDebInfo|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -191,8 +191,7 @@ namespace gleam {
 		ModelDesc model_desc_;
 	};
 
-	Mesh::Mesh(const std::string & name, const RenderModelPtr & model)
-		:model_ptr_(model), name_(name), mtl_id_(-1)
+	Mesh::Mesh(const std::string & name, const RenderModelPtr & model) :model_ptr_(model), name_(name), mtl_id_(-1)
 	{
 		layout_ = Context::Instance().RenderEngineInstance().MakeRenderLayout();
 		layout_->TopologyType(TT_TriangleList);
@@ -227,7 +226,8 @@ namespace gleam {
 
 	void Mesh::DoLoadMeshInfo()
 	{
-		if (this->MaterialID() >= 0) {
+		if (this->MaterialID() >= 0)
+		{
 			RenderModelPtr model = model_ptr_.lock();
 			mtl_ = model->GetMaterial(this->MaterialID());
 
@@ -465,8 +465,16 @@ namespace gleam {
 		}
 	}
 
-	bool LoadModel(const std::string & name, std::vector<MaterialPtr>& mtls, std::vector<VertexElement>& merged_ves, std::vector<std::vector<uint8_t>>& merged_buff, std::vector<uint8_t>& merged_indices, std::vector<std::string>& mesh_names, std::vector<int32_t>& mtl_ids, std::vector<uint32_t>& mesh_num_vertices, std::vector<uint32_t> &mesh_start_vertices,
-		std::vector<uint32_t>& mesh_num_indices, std::vector<uint32_t> &mesh_start_indices)
+	bool LoadModel(const std::string & name, std::vector<MaterialPtr>& mtls, 
+				   std::vector<VertexElement>& merged_ves, 
+				   std::vector<std::vector<uint8_t>>& merged_buff, 
+				   std::vector<uint8_t>& merged_indices, 
+				   std::vector<std::string>& mesh_names, 
+				   std::vector<int32_t>& mtl_ids, 
+				   std::vector<uint32_t>& mesh_num_vertices, 
+				   std::vector<uint32_t> &mesh_start_vertices,
+				   std::vector<uint32_t>& mesh_num_indices, 
+				   std::vector<uint32_t> &mesh_start_indices)
 	{
 		std::string file_name = ResLoader::Instance().Locate(name);
 
@@ -542,6 +550,7 @@ namespace gleam {
 		{
 			size_t stride = meshes[i].vertices.size();
 			std::copy((uint8_t*)meshes[i].vertices.data(), (uint8_t*)(&meshes[i].vertices.back() + 1), cur_vertices);
+			//std::copy((uint8_t*)meshes[i].vertices.begin(), (uint8_t*)meshes[i].vertices.end(), cur_vertices);
 			std::copy((uint8_t*)meshes[i].normals.data(), (uint8_t*)(&meshes[i].normals.back() + 1), cur_normals);
 			cur_vertices += stride * merged_ves[0].NumFormatBytes();
 			cur_normals += stride * merged_ves[1].NumFormatBytes();

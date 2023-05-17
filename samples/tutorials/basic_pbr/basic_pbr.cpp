@@ -34,8 +34,7 @@ private:
 class RenderBox : public Mesh
 {
 public:
-	RenderBox(const std::string &name, const ModelPtr &model)
-		: Mesh(name, model)
+	RenderBox(const std::string &name, const RenderModelPtr &model): Mesh(name, model)
 	{
 		RenderEffectPtr effect = LoadRenderEffect("basic_pbr.xml");
 		RenderTechnique *technique = effect->GetTechniqueByName("BasicLight");
@@ -155,7 +154,7 @@ protected:
 			normals.emplace_back(v[i * 6 + 3], v[i * 6 + 4], v[i * 6 + 5]);
 		}
 
-		ModelPtr box = std::make_shared<Model>("Model");
+		RenderModelPtr box = std::make_shared<RenderModel>("Model");
 		std::vector<MeshPtr> box_mesh(1);
 		box_mesh[0] = std::make_shared<RenderBox>("box", box);
 		box_mesh[0]->AddVertexStream(vertices.data(), static_cast<uint32_t>(sizeof(vertices[0]) * vertices.size()),
@@ -174,7 +173,7 @@ protected:
 
 		box_mesh[0]->LoadMeshInfo();
 
-		ModelPtr lamp = std::make_shared<Model>("Model");
+		RenderModelPtr lamp = std::make_shared<RenderModel>("Model");
 		std::vector<MeshPtr> lamp_mesh(1);
 		lamp_mesh[0] = std::make_shared<RenderLamp>("lamp", lamp);
 

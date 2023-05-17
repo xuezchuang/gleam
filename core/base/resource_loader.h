@@ -52,6 +52,8 @@ namespace gleam
 		template <typename T>
 		std::shared_ptr<T> QueryT(const ResLoadingDescPtr &res_desc)
 		{
+			//这儿应该是向上转换呐,不应该使用dynamic_pointer_cast嘛?为何可以用static_pointer_cast
+			//return std::checked_pointer_cast<T>(this->Query(res_desc));
 			return std::static_pointer_cast<T>(this->Query(res_desc));
 		}
 

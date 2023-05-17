@@ -289,7 +289,7 @@ namespace gleam {
 					normalized = (((VEU_Diffuse == vs_elem.usage) || (VEU_Specular == vs_elem.usage)) && !IsFloatFormat(vs_elem.format)) ? GL_TRUE : normalized;
 
 					assert(GL_ARRAY_BUFFER == stream.GLType());
-					stream.Active(true);
+					//stream.Active(true);
 
 					glVertexArrayAttribFormat(vao, attr, num_components, type, normalized, elem_offset);
 					glVertexArrayAttribBinding(vao, attr, i);
@@ -304,8 +304,7 @@ namespace gleam {
 
 		if (this->InstanceStream())
 		{
-			OGLGraphicsBuffer &stream =
-				*(checked_pointer_cast<OGLGraphicsBuffer>(this->InstanceStream()));
+			OGLGraphicsBuffer &stream = *(checked_pointer_cast<OGLGraphicsBuffer>(this->InstanceStream()));
 
 			const uint32_t instance_size = this->InstanceSize();
 			assert(this->NumInstances() * instance_size <= stream.Size());

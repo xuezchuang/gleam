@@ -115,8 +115,7 @@ namespace gleam {
 	}
 
 	template <typename To, typename From>
-	inline std::shared_ptr<To>
-		checked_pointer_cast(const std::shared_ptr<From> & p) noexcept
+	inline std::shared_ptr<To> checked_pointer_cast(const std::shared_ptr<From> & p) noexcept
 	{
 		assert(std::dynamic_pointer_cast<To>(p) == std::static_pointer_cast<To>(p));
 		return std::static_pointer_cast<To>(p);

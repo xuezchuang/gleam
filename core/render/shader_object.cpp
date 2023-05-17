@@ -6,8 +6,7 @@
 #include "render_engine.h"
 #include <base/context.h>
 namespace gleam {
-	ShaderObject::ShaderObject()
-		: has_tessellation(false)
+	ShaderObject::ShaderObject(): has_tessellation(false)
 	{
 	}
 	OGLShaderObject::OGLShaderObject()

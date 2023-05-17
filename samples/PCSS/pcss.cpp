@@ -16,8 +16,7 @@ static const uint32_t LIGHT_RES = 1024;
 class PCSSMesh : public Mesh
 {
 public:
-	PCSSMesh(const std::string &name, const ModelPtr &model)
-		: Mesh(name, model), pcss_pass_(false)
+	PCSSMesh(const std::string &name, const RenderModelPtr &model): Mesh(name, model), pcss_pass_(false)
 	{
 	}
 
@@ -84,8 +83,7 @@ private:
 	FrameBufferPtr shadow_fb_;
 };
 
-PCSS::PCSS()
-	: Framework3D("PCSS Sample.")
+PCSS::PCSS(): Framework3D("PCSS Sample.")
 {
 	ResLoader::Instance().AddPath("../../samples/pcss");
 	ResLoader::Instance().AddPath("../../resource/common/pcss");
@@ -103,14 +101,14 @@ void PCSS::OnCreate()
 	controller_.SetScalers(0.01f, 0.01f);
 	render_camera_ = default_fb->GetViewport()->camera;
 
-	ModelPtr knoght_model = LoadModel("knight.obj", EAH_Immutable, CreateModelFunc<Model>(), CreateMeshFunc<PCSSMesh>());
+	RenderModelPtr knoght_model = LoadModel("knight.obj", EAH_Immutable, CreateModelFunc<RenderModel>(), CreateMeshFunc<PCSSMesh>());
 	SceneObjectPtr knight_so = std::make_shared<SceneObjectHelper>(knoght_model, SOA_Cullable);
 	knight_so->AddToSceneManager();
 	for (uint32_t i = 0; i < knight_so->NumChildren(); ++i)
 	{
 		mesh_so_.push_back(knight_so->Child(i));
 	}
-	ModelPtr podium_model = LoadModel("podium.obj", EAH_Immutable, CreateModelFunc<Model>(), CreateMeshFunc<PCSSMesh>());
+	RenderModelPtr podium_model = LoadModel("podium.obj", EAH_Immutable, CreateModelFunc<RenderModel>(), CreateMeshFunc<PCSSMesh>());
 	SceneObjectPtr podium_so = std::make_shared<SceneObjectHelper>(podium_model, SOA_Cullable);
 	podium_so->AddToSceneManager();
 	for (uint32_t i = 0; i < podium_so->NumChildren(); ++i)
@@ -118,7 +116,7 @@ void PCSS::OnCreate()
 		mesh_so_.push_back(podium_so->Child(i));
 	}
 
-	ModelPtr ground_model = LoadModel("plane.obj", EAH_Immutable, CreateModelFunc<Model>(), CreateMeshFunc<PCSSMesh>());
+	RenderModelPtr ground_model = LoadModel("plane.obj", EAH_Immutable, CreateModelFunc<RenderModel>(), CreateMeshFunc<PCSSMesh>());
 	MaterialPtr ground_mat = ground_model->GetMaterial(0);
 	ground_mat->tex_names[TS_Normal] = "lichen6_normal.jpg";
 	ground_mat->tex_names[TS_Albedo] = "lichen6.png";

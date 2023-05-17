@@ -51,10 +51,11 @@ protected:
 		renderableBox_ = std::make_shared<SceneObjectHelper>(std::make_shared<RenderableBox>(box, color), SOA_Cullable);
 		renderableBox_->AddToSceneManager();
 
-		RenderModelPtr teapot_model = LoadModel("teapot.obj", EAH_GPU_Read, CreateModelFunc<RenderModel>(), CreateMeshFunc<RenderPolygon>());
+		RenderModelPtr teapot_model = LoadModel("11.obj", EAH_GPU_Read, CreateModelFunc<RenderModel>(), CreateMeshFunc<RenderPolygon>());
 		teapot_ = std::make_shared<SceneObjectHelper>(teapot_model, SOA_Cullable);
-		glm::mat4 model = glm::scale(glm::mat4(), glm::vec3(0.005f));
-		model = glm::translate(model, glm::vec3(0, 0.5f, 0));
+		//glm::mat4 model = glm::scale(glm::mat4(), glm::vec3(0.005f));
+		glm::mat4 model = glm::scale(glm::mat4(), glm::vec3(1.0));
+		//model = glm::translate(model, glm::vec3(0, 0.5f, 0));
 		teapot_->ModelMatrix(model);
 		teapot_->AddToSceneManager();
 
@@ -62,7 +63,7 @@ protected:
 		this->Proj(0.1f, 2000.0f);
 
 		controller.AttachCamera(this->ActiveCamera());
-		controller.SetScalers(0.01f, 0.05f);
+		//controller.SetScalers(0.01f, 0.05f);
 	}
 
 private:

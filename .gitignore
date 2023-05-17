@@ -9,3 +9,6 @@
 /Gleam.VC.db
 /bin
 *.vcxproj.user
+/external/dll/assimp-vc142-mtd.dll
+/external/dll/assimp-vc142-mtd.pdb
+/external/lib/assimp-vc142-mtd.lib

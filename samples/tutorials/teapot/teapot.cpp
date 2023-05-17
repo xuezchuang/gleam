@@ -15,8 +15,7 @@ using namespace gleam;
 class TexturedRenderPolygon : public Mesh
 {
 public:
-	TexturedRenderPolygon(const std::string &name, const ModelPtr &model)
-		: Mesh(name, model)
+	TexturedRenderPolygon(const std::string &name, const RenderModelPtr &model): Mesh(name, model)
 	{
 		RenderEffectPtr effect = LoadRenderEffect("renderable.xml");
 		RenderTechnique *technique = effect->GetTechniqueByName("TexTec");
@@ -41,26 +40,26 @@ public:
 class TeapotFramework : public Framework3D
 {
 public:
-	TeapotFramework()
-		: Framework3D("Line")
+	TeapotFramework(): Framework3D("Line")
 	{
 		ResLoader::Instance().AddPath("../../resource/common/teapot");
 	}
 protected:
 	void OnCreate() override
 	{
-		ModelPtr teapot_model = LoadModel("teapot.obj", EAH_GPU_Read, CreateModelFunc<Model>(), CreateMeshFunc<TexturedRenderPolygon>());
+		RenderModelPtr teapot_model = LoadModel("11.obj", EAH_GPU_Read, CreateModelFunc<RenderModel>(), CreateMeshFunc<TexturedRenderPolygon>());
 		teapot_ = std::make_shared<SceneObjectHelper>(teapot_model, SOA_Cullable);
-		glm::mat4 model = glm::scale(glm::mat4(), glm::vec3(0.02f));
-		model = glm::translate(model, glm::vec3(0, -50.0f, 0));
+		//glm::mat4 model = glm::scale(glm::mat4(), glm::vec3(0.02f));
+		glm::mat4 model = glm::scale(glm::mat4(), glm::vec3(1.0));
+		//model = glm::translate(model, glm::vec3(0, -50.0f, 0));
 		teapot_->ModelMatrix(model);
 		teapot_->AddToSceneManager();
 
-		this->LookAt(glm::vec3(0, 0, -4.0f), glm::vec3(0));
-		this->Proj(0.1f, 2000.0f);
+		this->LookAt(glm::vec3(2, 0, -2), glm::vec3(0, 0, 0));
+		this->Proj(0.1f, 100);
 
 		controller.AttachCamera(this->ActiveCamera());
-		controller.SetScalers(0.01f, 0.05f);
+		//controller.SetScalers(0.01f, 0.05f);
 	}
 
 private:

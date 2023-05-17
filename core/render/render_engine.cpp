@@ -116,6 +116,7 @@ namespace gleam {
 		auto iter = binded_buffers_.find(target);
 		if (force || (iter == binded_buffers_.end()) || (iter->second != buffer))
 		{
+			assert(target == GL_ELEMENT_ARRAY_BUFFER);
 			glBindBuffer(target, buffer);
 			binded_buffers_[target] = buffer;
 		}

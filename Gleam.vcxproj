@@ -86,13 +86,13 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>./external/include;./core;./external;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./external/include;./core;./external;./external/assimp/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalDependencies>glew32.lib;OpenGL32.lib;glfw3.lib;assimp-vc140-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Lib>
-      <AdditionalDependencies>glew32.lib;glfw3.lib;opengl32.lib;assimp-vc140-mt.lib;</AdditionalDependencies>
+      <AdditionalDependencies>glew32.lib;glfw3.lib;opengl32.lib;assimp-vc142-mtd.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>./external/lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>/ignore:4006 /ignore:4221 %(AdditionalOptions)</AdditionalOptions>
     </Lib>
@@ -259,6 +259,11 @@
     <None Include="resource\render\11.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="external\assimp\build\code\assimp.vcxproj">
+      <Project>{a554df33-ce70-3f7d-883a-f6f675475f5b}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
