@@ -18,8 +18,7 @@
 
 using namespace gleam;
 
-HDRAdvance::HDRAdvance()
-	:Framework3D("glare effect sample")
+HDRAdvance::HDRAdvance():Framework3D("glare effect sample")
 {
 	ResLoader::Instance().AddPath("../../samples/HDR");
 	ResLoader::Instance().AddPath("../../samples/glare_effect");
@@ -349,8 +348,7 @@ void HDRAdvance::Init()
 	glare_tex_ = re.MakeTexture2D(pp_width / 2, pp_height / 2, 1, EF_ABGR32F, 1, EAH_GPU_Read | EAH_GPU_Write);
 }
 
-Object::Object(const std::string & name, const ModelPtr & model)
-	: Mesh(name, model)
+Object::Object(const std::string & name, const RenderModelPtr & model): Mesh(name, model)
 {
 	effect_ = LoadRenderEffect("HDR.xml");
 	//matte_tech_ = effect_->GetTechniqueByName("MatteTech");
@@ -389,9 +387,8 @@ void Object::OnRenderBegin()
 	*(shader.GetSamplerByName("env_map")) = cubemap_;
 }
 
-SObject::SObject()
-	: SceneObjectHelper(LoadModel("venus.obj", EAH_GPU_Read | EAH_Immutable,
-		CreateModelFunc<Model>(), CreateMeshFunc<Object>()), SOA_Cullable)
+SObject::SObject(): SceneObjectHelper(LoadModel("venus.obj", EAH_GPU_Read | EAH_Immutable,
+		CreateModelFunc<RenderModel>(), CreateMeshFunc<Object>()), SOA_Cullable)
 {
 }
 

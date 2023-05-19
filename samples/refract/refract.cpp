@@ -13,8 +13,7 @@ using namespace gleam;
 class Refractor : public Mesh
 {
 public:
-	Refractor(const std::string &name, const ModelPtr model)
-		: Mesh(name, model)
+	Refractor(const std::string &name, const RenderModelPtr model): Mesh(name, model)
 	{
 		effect_ = LoadRenderEffect("Refract.xml");
 		technique_ = effect_->GetTechniqueByName("Refract");
@@ -60,7 +59,7 @@ class RefractorSceneObject : public SceneObjectHelper
 public:
 	RefractorSceneObject(const TexturePtr &cubemap)
 		: SceneObjectHelper(LoadModel("teapot.obj", EAH_GPU_Read | EAH_Immutable,
-			CreateModelFunc<Model>(), CreateMeshFunc<Refractor>()), SOA_Cullable)
+			CreateModelFunc<RenderModel>(), CreateMeshFunc<Refractor>()), SOA_Cullable)
 	{
 		for (uint32_t i = 0; i < renderable_->NumSubrenderables(); ++i)
 		{

@@ -16,8 +16,7 @@
 
 using namespace gleam;
 
-HDRObject::HDRObject(const std::string & name, const ModelPtr & model)
-	: Mesh(name, model)
+HDRObject::HDRObject(const std::string & name, const RenderModelPtr & model): Mesh(name, model)
 {
 	effect_ = LoadRenderEffect("HDR.xml");
 	refract_tech_ = effect_->GetTechniqueByName("RefractTech");
@@ -43,7 +42,7 @@ void HDRObject::OnRenderBegin()
 
 HdrSceneObject::HdrSceneObject()
 	: SceneObjectHelper(LoadModel("venus.obj", EAH_GPU_Read | EAH_Immutable,
-		CreateModelFunc<Model>(), CreateMeshFunc<HDRObject>()), SOA_Cullable)
+		CreateModelFunc<RenderModel>(), CreateMeshFunc<HDRObject>()), SOA_Cullable)
 {
 }
 
@@ -55,8 +54,7 @@ void HdrSceneObject::Cubemap(const TexturePtr & cubemap)
 	}
 }
 
-HDR::HDR()
-	:Framework3D("HDR")
+HDR::HDR():Framework3D("HDR")
 {
 	ResLoader::Instance().AddPath("../../samples/HDR");
 	ResLoader::Instance().AddPath("../../resource/common/skybox");

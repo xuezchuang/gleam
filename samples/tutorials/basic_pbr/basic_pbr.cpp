@@ -70,8 +70,7 @@ public:
 class RenderLamp : public Mesh
 {
 public:
-	RenderLamp(const std::string &name, const ModelPtr &model)
-		: Mesh(name, model)
+	RenderLamp(const std::string &name, const RenderModelPtr &model): Mesh(name, model)
 	{
 		RenderEffectPtr effect = LoadRenderEffect("basic_pbr.xml");
 		RenderTechnique *technique = effect->GetTechniqueByName("Lamp");

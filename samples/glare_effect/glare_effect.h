@@ -41,7 +41,7 @@ enum BUFFER_PYRAMID
 class Object : public Mesh
 {
 public:
-	Object(const std::string &name, const ModelPtr &model);
+	Object(const std::string &name, const RenderModelPtr &model);
 
 	void OnRenderBegin() override;
 

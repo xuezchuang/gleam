@@ -103,13 +103,13 @@ namespace gleam
 	//	glm::mat4 scale_matrix_;
 	//};
 
-	//class SceneObjectSkybox : public SceneObjectHelper
-	//{
-	//public:
-	//	explicit SceneObjectSkybox(uint32_t attrib = 0);
+	class SceneObjectSkybox : public SceneObjectHelper
+	{
+	public:
+		explicit SceneObjectSkybox(uint32_t attrib = 0);
 
-	//	void CubeMap(const TexturePtr &cubemap);
-	//};
+		void CubeMap(const TexturePtr& cubemap);
+	};
 }
 
 #endif // !GLEAM_SCENE_OBJECT_H_

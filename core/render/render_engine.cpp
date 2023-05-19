@@ -1023,6 +1023,7 @@ namespace gleam {
 		char const * desc_begin = reinterpret_cast<char const *>(&desc);
 		char const * desc_end = desc_begin + sizeof(desc);
 
+		//如何保证seed是唯一的???
 		size_t seed = HashRange(desc_begin, desc_end);
 		auto iter = sampler_state_pool_.find(seed);
 		if (iter == sampler_state_pool_.end())

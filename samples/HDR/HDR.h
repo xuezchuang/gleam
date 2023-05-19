@@ -15,7 +15,7 @@ using namespace gleam;
 class HDRObject : public Mesh
 {
 public:
-	HDRObject(const std::string &name, const ModelPtr &model);
+	HDRObject(const std::string &name, const RenderModelPtr &model);
 
 	void OnRenderBegin() override;
 

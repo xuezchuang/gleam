@@ -361,13 +361,27 @@ namespace gleam {
 		OGLMapping::MappingFormat(glinternalformat, glformat, gltype, format_);
 		if (sample_count_ <= 1)
 		{
-			glNamedBufferData(pbo_, mipmap_start_offset_.back(), nullptr, GL_STREAM_COPY);
+			static bool bUsePBO = true;
+			bUsePBO = false;
+			if(bUsePBO)
+			{
+				glNamedBufferData(pbo_, mipmap_start_offset_.back(), nullptr, GL_STREAM_COPY);
+				glBindTexture(target_type_, texture_);
+				glTexImage2D(target_type_, 0, glinternalformat, width_, height_, 0, glformat, gltype, init_data.empty() ? nullptr : init_data[0].data);
+				if (num_mip_maps_ != 1)
+					glGenerateTextureMipmap(texture_);
+				glTextureParameteri(texture_, GL_TEXTURE_MAX_LEVEL, num_mip_maps_ - 1);
 
-			glBindTexture(target_type_, texture_);
-			glTexImage2D(target_type_, 0, glinternalformat, width_, height_, 0, glformat, gltype, init_data.empty() ? nullptr : init_data[0].data);
-			if (num_mip_maps_ != 1)
-				glGenerateTextureMipmap(texture_);
-			glTextureParameteri(texture_, GL_TEXTURE_MAX_LEVEL, num_mip_maps_ - 1);
+			}
+			else
+			{
+				//glNamedBufferData(pbo_, mipmap_start_offset_.back(), init_data.empty() ? nullptr : init_data[0].data, GL_STREAM_COPY);
+				glBindTexture(target_type_, texture_);
+				glTexImage2D(target_type_, 0, glinternalformat, width_, height_, 0, glformat, gltype, init_data.empty() ? nullptr : init_data[0].data);
+				if (num_mip_maps_ != 1)
+					glGenerateTextureMipmap(texture_);
+				glTextureParameteri(texture_, GL_TEXTURE_MAX_LEVEL, num_mip_maps_ - 1);
+			}
 		}
 		else
 		{
@@ -444,7 +458,8 @@ namespace gleam {
 		tex_desc->SetTextureType(TextureType::TT_2D);
 		return ResLoader::Instance().QueryT<Texture>(tex_desc);
 	}
-	bool LoadTexture2D(const std::string & name, TextureType &type, uint32_t & width, uint32_t & height, ElementFormat & format, std::vector<ElementInitData> &init_data, std::vector<uint8_t>& data)
+	bool LoadTexture2D(const std::string & name, TextureType &type, uint32_t & width, uint32_t & height, 
+					   ElementFormat & format, std::vector<ElementInitData> &init_data, std::vector<uint8_t>& data)
 	{
 		std::string file_name = ResLoader::Instance().Locate(name);
 		if (!file_name.empty()) // TT_1D, TT2D
@@ -508,7 +523,8 @@ namespace gleam {
 		tex_desc->SetTextureType(TextureType::TT_2D_Array);
 		return ResLoader::Instance().QueryT<Texture>(tex_desc);
 	}
-	bool LoadTexture2DArray(const std::vector<std::string>& names, TextureType & type, uint32_t & width, uint32_t & height, ElementFormat & format, std::vector<ElementInitData>& init_data, std::vector<uint8_t>& data)
+	bool LoadTexture2DArray(const std::vector<std::string>& names, TextureType & type, uint32_t & width, uint32_t & height,
+							ElementFormat & format, std::vector<ElementInitData>& init_data, std::vector<uint8_t>& data)
 	{
 		uint32_t array_size = static_cast<uint32_t>(names.size());
 		for (uint32_t index = 0; index < array_size; ++index)
@@ -645,7 +661,8 @@ namespace gleam {
 
 		return true;
 	}
-	bool LoadTextureCube(const std::string & name, TextureType & type, uint32_t & width, uint32_t & height, ElementFormat & format, std::vector<ElementInitData>& init_data, std::vector<uint8_t>& data)
+	bool LoadTextureCube(const std::string & name, TextureType & type, uint32_t & width, uint32_t & height, ElementFormat & format, 
+						 std::vector<ElementInitData>& init_data, std::vector<uint8_t>& data)
 	{
 		std::string file_name = ResLoader::Instance().Locate(name);
 		if (!file_name.empty())
@@ -733,7 +750,8 @@ namespace gleam {
 		}
 		return true;
 	}
-	OGLTexture2DArray::OGLTexture2DArray(uint32_t array_size, uint32_t width, uint32_t height, uint32_t num_mip_maps, ElementFormat format, uint32_t sample_count, uint32_t access_hint)
+	OGLTexture2DArray::OGLTexture2DArray(uint32_t array_size, uint32_t width, uint32_t height, uint32_t num_mip_maps, 
+										 ElementFormat format, uint32_t sample_count, uint32_t access_hint)
 		: OGLTexture(TT_2D_Array, array_size, sample_count, access_hint)
 	{
 		format_ = format;

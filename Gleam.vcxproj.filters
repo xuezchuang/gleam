@@ -246,9 +246,6 @@
     <ClInclude Include="core\base\half.h">
       <Filter>88</Filter>
     </ClInclude>
-    <ClInclude Include="core\util\hash.h">
-      <Filter>88</Filter>
-    </ClInclude>
     <ClInclude Include="core\util\improved_noise.h">
       <Filter>88</Filter>
     </ClInclude>
@@ -256,7 +253,10 @@
       <Filter>88</Filter>
     </ClInclude>
     <ClInclude Include="external\include\stb_image\stb_image.h">
-      <Filter>88</Filter>
+      <Filter>06 textrue</Filter>
+    </ClInclude>
+    <ClInclude Include="core\util\hash.h">
+      <Filter>81 util</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

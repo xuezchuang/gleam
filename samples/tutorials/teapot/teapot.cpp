@@ -33,9 +33,7 @@ public:
 
 		glm::mat4 mvp = framework.ActiveCamera().ProjViewMatrix() * model_matrix_;
 		*mvp_ = mvp;
-
 	}
-
 };
 
 class TeapotFramework : public Framework3D
@@ -49,7 +47,7 @@ protected:
 	void OnCreate() override
 	{
 		bool btest = false;
-		btest = true;
+		//btest = true;
 		if (btest)
 		{
 			RenderModelPtr teapot_model = LoadModel("11.obj", EAH_GPU_Read, CreateModelFunc<RenderModel>(), CreateMeshFunc<TexturedRenderPolygon>());

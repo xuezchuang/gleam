@@ -81,8 +81,7 @@ uint32_t SimpleRenderLayer::ScenePass()
 }
 
 
-Bloom::Bloom()
-	: Framework3D("bloom")
+Bloom::Bloom(): Framework3D("bloom")
 {
 	ResLoader::Instance().AddPath("../../samples/bloom");
 	ResLoader::Instance().AddPath("../../resource/common/gate");
@@ -97,8 +96,8 @@ void Bloom::OnCreate()
 
 	RenderEngine &re = Context::Instance().RenderEngineInstance();
 
-	ModelPtr gate = LoadModel("gate.obj", EAH_Immutable,
-		CreateModelFunc<Model>(), CreateMeshFunc<Mesh>());
+	RenderModelPtr gate = LoadModel("gate.obj", EAH_Immutable,
+		CreateModelFunc<RenderModel>(), CreateMeshFunc<Mesh>());
 	layer = std::make_shared<SimpleRenderLayer>();
 	gate_so_ = std::make_shared<SceneObjectHelper>(gate, SOA_Cullable);
 	gate_so_->AddToSceneManager();
