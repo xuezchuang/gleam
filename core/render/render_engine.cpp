@@ -844,7 +844,7 @@ namespace gleam {
 
 		FrameBufferPtr win_fb = std::make_shared<OGLFrameBuffer>(false);
 		win_fb->Attach(ATT_Color0, std::make_shared<OGLDefaultColorRenderView>(win->Width(), win->Height(), settings.color_format));
-		win_fb->Attach(ATT_DepthStencil, std::make_shared<OGLDefaultColorRenderView>(win->Width(), win->Height(), settings.depth_stencil_format));
+		win_fb->Attach(ATT_DepthStencil, std::make_shared<OGLDefaultDepthStencilRenderView>(win->Width(), win->Height(), settings.depth_stencil_format));
 
 		RenderEngine::BindFrameBuffer(win_fb);
 		//glGenFramebuffers(1, &fbo_blit_src_);

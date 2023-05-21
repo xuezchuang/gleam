@@ -151,7 +151,8 @@ namespace gleam
 		fb_ = re.MakeFrameBuffer();
 	}
 
-	PostProcess::PostProcess(const std::vector<std::string>& param_names, const std::vector<std::string>& input_names, const std::vector<std::string>& output_names, const RenderEffectPtr & effect, RenderTechnique * tech)
+	PostProcess::PostProcess(const std::vector<std::string>& param_names, const std::vector<std::string>& input_names,
+		const std::vector<std::string>& output_names, const RenderEffectPtr & effect, RenderTechnique * tech)
 		: compute_shader_(false), cs_thread_x_(1), cs_thread_y_(1), cs_thread_z_(1),
 		input_(input_names.size()), output_(output_names.size()), 
 		input_tex_(input_names.size()), output_tex_(output_names.size()), 

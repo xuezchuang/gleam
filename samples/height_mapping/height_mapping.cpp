@@ -16,8 +16,7 @@ using namespace gleam;
 class RenderPolygon : public RenderableHelper
 {
 public:
-	RenderPolygon()
-		: RenderableHelper()
+	RenderPolygon(): RenderableHelper()
 	{
 		RenderEngine &re = Context::Instance().RenderEngineInstance();
 

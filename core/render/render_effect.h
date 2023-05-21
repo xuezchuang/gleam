@@ -120,6 +120,7 @@ namespace gleam
 	};
 
 	RenderEffectPtr LoadRenderEffect(const std::string & effect_name);
+
 }
 
 

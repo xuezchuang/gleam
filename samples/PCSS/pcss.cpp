@@ -13,6 +13,29 @@
 
 static const uint32_t LIGHT_RES = 1024;
 
+class TexturedRenderPolygon : public Mesh
+{
+public:
+	TexturedRenderPolygon(const std::string& name, const RenderModelPtr& model) : Mesh(name, model)
+	{
+		RenderEffectPtr effect = LoadRenderEffect("renderable.xml");
+		RenderTechnique* technique = effect->GetTechniqueByName("TexTec");
+		this->BindRenderTechnique(effect, technique);
+		ShaderObject& shader = *technique_->GetShaderObject(*effect_);
+		mvp_ = shader.GetUniformByName("mvp");
+		albedo_tex_ = shader.GetSamplerByName("albedo_tex");
+	}
+
+	void OnRenderBegin() override
+	{
+		Renderable::OnRenderBegin();
+		Framework3D& framework = Context::Instance().FrameworkInstance();
+
+		glm::mat4 mvp = framework.ActiveCamera().ProjViewMatrix() * model_matrix_;
+		*mvp_ = mvp;
+	}
+};
+
 class PCSSMesh : public Mesh
 {
 public:
@@ -89,6 +112,7 @@ PCSS::PCSS(): Framework3D("PCSS Sample.")
 	ResLoader::Instance().AddPath("../../resource/common/pcss");
 }
 
+/*	PCSS通常代表Percentage Closer Soft Shadows（百分比更平滑阴影）技术	*/
 void PCSS::OnCreate()
 {
 	RenderEngine &re = Context::Instance().RenderEngineInstance();
@@ -120,8 +144,9 @@ void PCSS::OnCreate()
 	MaterialPtr ground_mat = ground_model->GetMaterial(0);
 	ground_mat->tex_names[TS_Normal] = "lichen6_normal.jpg";
 	ground_mat->tex_names[TS_Albedo] = "lichen6.png";
-	checked_pointer_cast<Mesh>(ground_model->Subrenderable(0))->LoadMeshInfo();
-	SceneObjectPtr ground_so = std::make_shared<SceneObjectHelper>(ground_model, SOA_Cullable | SOA_Moveable);
+	//checked_pointer_cast<Mesh>(ground_model->Subrenderable(0))->LoadMeshInfo();
+	ground_model->GetMesh(0)->LoadMeshInfo();
+	SceneObjectHelperPtr ground_so = std::make_shared<SceneObjectHelper>(ground_model, SOA_Cullable | SOA_Moveable);
 	ground_so->AddToSceneManager();
 	glm::mat4 g_trans = glm::translate(glm::mat4(), glm::vec3(0, -0.35f, 0));
 	g_trans = glm::scale(g_trans, glm::vec3(3.0f));

@@ -135,10 +135,14 @@ void OIT::OnCreate()
 
 	dragon_ = LoadModel("dragon.obj", EAH_Immutable, CreateModelFunc<RenderModel>(), CreateMeshFunc<RenderPolygon>());
 
-	InitDepthPeeling();
+	SceneObjectHelperPtr dragon_so = std::make_shared<SceneObjectHelper>(dragon_, SOA_Cullable);
+	dragon_so->AddToSceneManager();
+
+	//InitDepthPeeling();
 	InitWeightedBlended();
 
-	this->RegisterAfterFrameFunc([this](float app_time, float frame_time) ->int {
+	this->RegisterAfterFrameFunc([this](float app_time, float frame_time) ->int 
+	{
 		RenderEngine &re = Context::Instance().RenderEngineInstance();
 		static float accum_time = 0;
 		accum_time += frame_time;
@@ -161,7 +165,8 @@ void OIT::OnCreate()
 	});
 
 	InputEngine &ie = Context::Instance().InputEngineInstance();
-	ie.Register([this]() {
+	ie.Register([this]() 
+	{
 		static Timer timer;
 		RenderEngine &re = Context::Instance().RenderEngineInstance();
 		WindowPtr window = re.GetWindow();
@@ -240,9 +245,6 @@ void OIT::InitDepthPeeling()
 	front_blender_fbo_->Attach(ATT_Color0, front_color_blender_rv);
 	front_blender_fbo_->GetViewport()->camera = re.DefaultFrameBuffer()->GetViewport()->camera;
 
-
-	SceneObjectHelperPtr dragon_so = std::make_shared<SceneObjectHelper>(dragon_, SOA_Cullable);
-	dragon_so->AddToSceneManager();
 
 	peel_blend_pp_ = LoadPostProcess("oit_pp.xml", "FrontPeelingBlendPP");
 	peel_final_pp_ = LoadPostProcess("oit_pp.xml", "PeelingFinalPP");
@@ -354,7 +356,7 @@ uint32_t OIT::DoUpdateWeightedBlended(uint32_t render_index)
 		re.DefaultFrameBuffer()->Clear(CBM_Color | CBM_Depth, Color(0.2f, 0.4f, 0.6f, 1.0f), 1.0f, 0);
 		accum_fbo_->ClearColor(ATT_Color0, Color(0, 0, 0, 0));
 		accum_fbo_->ClearColor(ATT_Color1, Color(1.0f, 1.0f, 1.0f, 1.0f));
-		return UR_OpaqueOnly | UR_NeedFlush;
+		return UR_OpaqueOnly /*| UR_NeedFlush*/;
 	}
 	case 1:
 	{

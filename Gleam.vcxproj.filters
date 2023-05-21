@@ -77,7 +77,7 @@
       <Filter>81 util</Filter>
     </ClCompile>
     <ClCompile Include="core\render\post_process.cpp">
-      <Filter>10 postprocess</Filter>
+      <Filter>02 render\10 postprocess</Filter>
     </ClCompile>
     <ClCompile Include="core\base\resource_loader.cpp">
       <Filter>11 resource</Filter>
@@ -86,7 +86,7 @@
       <Filter>06 textrue</Filter>
     </ClCompile>
     <ClCompile Include="core\render\shader_object.cpp">
-      <Filter>07 shaderObject</Filter>
+      <Filter>02 render\01 shaderObject</Filter>
     </ClCompile>
     <ClCompile Include="core\render\compute_renderable.cpp">
       <Filter>02 render</Filter>
@@ -104,16 +104,16 @@
       <Filter>11 resource</Filter>
     </ClCompile>
     <ClCompile Include="core\render\uniform.cpp">
-      <Filter>21 uniform</Filter>
-    </ClCompile>
-    <ClCompile Include="core\base\bbox.cpp">
-      <Filter>88</Filter>
+      <Filter>02 render\02 uniform</Filter>
     </ClCompile>
     <ClCompile Include="core\base\color.inl">
       <Filter>88</Filter>
     </ClCompile>
     <ClCompile Include="core\base\half.cpp">
       <Filter>88</Filter>
+    </ClCompile>
+    <ClCompile Include="core\base\bbox.cpp">
+      <Filter>04 scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -205,7 +205,7 @@
       <Filter>81 util</Filter>
     </ClInclude>
     <ClInclude Include="core\render\post_process.h">
-      <Filter>10 postprocess</Filter>
+      <Filter>02 render\10 postprocess</Filter>
     </ClInclude>
     <ClInclude Include="core\base\resource_loader.h">
       <Filter>11 resource</Filter>
@@ -214,7 +214,7 @@
       <Filter>06 textrue</Filter>
     </ClInclude>
     <ClInclude Include="core\render\shader_object.h">
-      <Filter>07 shaderObject</Filter>
+      <Filter>02 render\01 shaderObject</Filter>
     </ClInclude>
     <ClInclude Include="core\render\compute_renderable.h">
       <Filter>02 render</Filter>
@@ -232,12 +232,9 @@
       <Filter>11 resource</Filter>
     </ClInclude>
     <ClInclude Include="core\render\uniform.h">
-      <Filter>21 uniform</Filter>
+      <Filter>02 render\02 uniform</Filter>
     </ClInclude>
     <ClInclude Include="core\util\timer.h">
-      <Filter>88</Filter>
-    </ClInclude>
-    <ClInclude Include="core\base\bbox.h">
       <Filter>88</Filter>
     </ClInclude>
     <ClInclude Include="core\base\color.hpp">
@@ -257,6 +254,9 @@
     </ClInclude>
     <ClInclude Include="core\util\hash.h">
       <Filter>81 util</Filter>
+    </ClInclude>
+    <ClInclude Include="core\base\bbox.h">
+      <Filter>04 scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -337,9 +337,6 @@
     <Filter Include="00 gleam">
       <UniqueIdentifier>{4a912c3b-e43b-4b2e-b90a-99912c9824f2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="10 postprocess">
-      <UniqueIdentifier>{5b01942d-ce8c-4316-8925-4917ea262cae}</UniqueIdentifier>
-    </Filter>
     <Filter Include="80 format">
       <UniqueIdentifier>{4c123d7f-c5e2-4776-84de-a5df366bccac}</UniqueIdentifier>
     </Filter>
@@ -349,17 +346,20 @@
     <Filter Include="06 textrue">
       <UniqueIdentifier>{0dd0bd87-0cbf-44e7-9555-6f602b281e3e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="07 shaderObject">
-      <UniqueIdentifier>{f0982888-f0f1-40e6-82e1-0fb393f26b2c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="20 view">
       <UniqueIdentifier>{bf2fff73-2c8e-4877-adef-c8f63edf375e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="21 uniform">
-      <UniqueIdentifier>{c34dcb99-6ce6-4b19-8759-539b8863f411}</UniqueIdentifier>
-    </Filter>
     <Filter Include="88">
       <UniqueIdentifier>{67d267ef-97f1-4668-80c8-669631005135}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02 render\01 shaderObject">
+      <UniqueIdentifier>{f0982888-f0f1-40e6-82e1-0fb393f26b2c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02 render\02 uniform">
+      <UniqueIdentifier>{c34dcb99-6ce6-4b19-8759-539b8863f411}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02 render\10 postprocess">
+      <UniqueIdentifier>{5b01942d-ce8c-4316-8925-4917ea262cae}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

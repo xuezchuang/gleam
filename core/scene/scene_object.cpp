@@ -7,13 +7,12 @@
 #include <render/light.h>
 namespace gleam 
 {
-	SceneObject::SceneObject(SceneObjectAttrib attrib)
+	SceneObject::SceneObject(uint32_t attrib)
 		: attrib_(attrib), parent_(nullptr), model_matrix_dirty_(true),
-		instance_data_dirty_(true),
-			model_(glm::mat4()), abs_model_(glm::mat4())
+		instance_data_dirty_(true),model_(glm::mat4()), abs_model_(glm::mat4())
 	{
 	}
-	SceneObjectAttrib SceneObject::Attrib() const
+	uint32_t SceneObject::Attrib() const
 	{
 		return attrib_;
 	}
@@ -104,15 +103,15 @@ namespace gleam
 			update_func_(*this, app_time, elapsed_time);
 		}
 	}
-	SceneObjectHelper::SceneObjectHelper(SceneObjectAttrib attrib): SceneObject(attrib)
+	SceneObjectHelper::SceneObjectHelper(uint32_t attrib): SceneObject(attrib)
 	{
 	}
-	SceneObjectHelper::SceneObjectHelper(const RenderablePtr & renderable, SceneObjectAttrib attrib): SceneObject(attrib)
+	SceneObjectHelper::SceneObjectHelper(const RenderablePtr & renderable, uint32_t attrib): SceneObject(attrib)
 	{
 		renderable_ = renderable;
 		this->OnAttachRenderable(false);
 	}
-	SceneObjectHelper::SceneObjectHelper(const RenderModelPtr &model, SceneObjectAttrib attrib): SceneObject(attrib), model_(model)
+	SceneObjectHelper::SceneObjectHelper(const RenderModelPtr &model, uint32_t attrib): SceneObject(attrib), model_(model)
 	{
 		this->OnAttachRenderable(false);
 	}
@@ -150,30 +149,29 @@ namespace gleam
 			}
 		}
 	}
-	//SceneObjectLightPolygon::SceneObjectLightPolygon(const LightPtr & light)
-	//	: SceneObjectHelper(SOA_Cullable | SOA_Moveable | SOA_NotCastShadow),
-	//	light_(light)
-	//{
-	//	renderable_ = std::make_shared<RenderableLightPolygon>();
-	//}
-	//void SceneObjectLightPolygon::Scale(const glm::vec3 & scale)
-	//{
-	//	this->scale_matrix_ = glm::scale(glm::mat4(), scale);
-	//}
-	//void SceneObjectLightPolygon::Update(float, float)
-	//{
-	//	model_ = glm::translate(glm::mat4(), light_->Position()) *
-	//		glm::mat4_cast(light_->Rotation()) * scale_matrix_;
+	SceneObjectLightPolygon::SceneObjectLightPolygon(const LightPtr & light)
+		: SceneObjectHelper(SOA_Cullable | SOA_Moveable | SOA_NotCastShadow),
+		light_(light)
+	{
+		renderable_ = std::make_shared<RenderableLightPolygon>();
+	}
+	void SceneObjectLightPolygon::Scale(const glm::vec3 & scale)
+	{
+		this->scale_matrix_ = glm::scale(glm::mat4(), scale);
+	}
+	void SceneObjectLightPolygon::Update(float, float)
+	{
+		glm::mat4 mat4model = glm::translate(glm::mat4(), light_->Position()) * glm::mat4_cast(light_->Rotation()) * scale_matrix_;
 
-	//	if (light_->Type() == LT_Spot)
-	//	{
-	//		// TODO : Add spot light
-	//	}
+		if (light_->Type() == LT_Spot)
+		{
+			// TODO : Add spot light
+		}
 
-	//	renderable_->ModelMatrix(model_);
-	//}
+		renderable_->ModelMatrix(mat4model);
+	}
 	SceneObjectSkybox::SceneObjectSkybox(uint32_t attrib): 
-		SceneObjectHelper(std::make_shared<RenderableSkybox>(), SceneObjectAttrib(attrib | SOA_NotCastShadow))
+		SceneObjectHelper(std::make_shared<RenderableSkybox>(), uint32_t(attrib | SOA_NotCastShadow))
 	{
 	}
 	void SceneObjectSkybox::CubeMap(const TexturePtr& cubemap)

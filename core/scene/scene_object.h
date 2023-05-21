@@ -27,9 +27,9 @@ namespace gleam
 	class SceneObject : boost::noncopyable, public std::enable_shared_from_this<SceneObject>
 	{
 	public:
-		SceneObject(SceneObjectAttrib attrib);
+		SceneObject(uint32_t attrib);
 		virtual ~SceneObject() {}
-		SceneObjectAttrib Attrib() const;
+		uint32_t Attrib() const;
 
 		SceneObject *Parent() const;
 		void Parent(SceneObject *parent);
@@ -58,7 +58,7 @@ namespace gleam
 		virtual void Update(float app_time, float elapsed_time);
 
 	protected:
-		SceneObjectAttrib attrib_;
+		uint32_t attrib_;
 
 		SceneObject *parent_;
 		std::vector<SceneObjectPtr> children_;
@@ -78,9 +78,9 @@ namespace gleam
 	class SceneObjectHelper : public SceneObject
 	{
 	public:
-		explicit SceneObjectHelper(SceneObjectAttrib attrib);
-		SceneObjectHelper(const RenderablePtr &renderable, SceneObjectAttrib attrib);
-		SceneObjectHelper(const RenderModelPtr &model, SceneObjectAttrib attrib);
+		explicit SceneObjectHelper(uint32_t attrib);
+		SceneObjectHelper(const RenderablePtr &renderable, uint32_t attrib);
+		SceneObjectHelper(const RenderModelPtr &model, uint32_t attrib);
 
 		virtual void OnAttachRenderable(bool add_to_scene) override;
 
@@ -88,20 +88,20 @@ namespace gleam
 		RenderModelPtr model_;
 	};
 
-	//class SceneObjectLightPolygon : public SceneObjectHelper
-	//{
-	//public:
-	//	explicit SceneObjectLightPolygon(const LightPtr & light);
+	class SceneObjectLightPolygon : public SceneObjectHelper
+	{
+	public:
+		explicit SceneObjectLightPolygon(const LightPtr & light);
 
-	//	void Scale(const glm::vec3 &scale);
+		void Scale(const glm::vec3 &scale);
 
-	//	void Update(float, float) override;
+		void Update(float, float) override;
 
-	//private:
-	//	LightPtr light_;
+	private:
+		LightPtr light_;
 
-	//	glm::mat4 scale_matrix_;
-	//};
+		glm::mat4 scale_matrix_;
+	};
 
 	class SceneObjectSkybox : public SceneObjectHelper
 	{

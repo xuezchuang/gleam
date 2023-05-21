@@ -69,7 +69,8 @@ namespace gleam {
 	}
 	uint32_t Framework3D::Update(uint32_t render_index)
 	{
-		if (render_index == 0) {
+		if (render_index == 0) 
+		{
 			++total_num_frames_;
 			frame_time_ = static_cast<float>(timer_.Elapsed());
 			++num_frames_;

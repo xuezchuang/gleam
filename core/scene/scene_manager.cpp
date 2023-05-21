@@ -246,7 +246,7 @@ namespace gleam {
 			{
 				Renderable *renderable = so->GetRenderable().get();
 
-				const SceneObjectAttrib attr = so->Attrib();
+				const uint32_t attr = so->Attrib();
 				if (attr & SOA_Moveable)
 				{
 					so->UpdateAbsModelMatrix();

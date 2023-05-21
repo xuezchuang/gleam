@@ -205,6 +205,7 @@ namespace gleam
 	void RenderEffect::LoadResource(TiXmlElement * root)
 	{
 		RenderEngine &re = Context::Instance().RenderEngineInstance();
+		/*load create uniform & sampler*/
 		for (TiXmlElement *shader_node = root->FirstChildElement("shader");
 			shader_node; shader_node = shader_node->NextSiblingElement("shader"))
 		{
@@ -341,6 +342,8 @@ namespace gleam
 				shader_attribs_[name].push_back(attrib);
 			}
 		}
+
+		/*load tehnique*/
 		for (TiXmlElement *technique_node = root->FirstChildElement("technique");
 			technique_node; technique_node = technique_node->NextSiblingElement("technique"))
 		{
@@ -734,6 +737,8 @@ namespace gleam
 				CHECK_INFO(false, "Invalid state name : " << state_name);
 			}
 		}
+
+
 		render_state_ = re.MakeRenderStateObject(raster_state, depth_stencil_state, blend_state);
 		if (transparent_)
 		{
