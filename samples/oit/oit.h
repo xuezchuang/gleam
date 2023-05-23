@@ -31,9 +31,12 @@ private:
 private:
 	TrackballCameraController controller_;
 
-	RenderModelPtr dragon_;
+	
 
-	OITMod mod_ = WeightedBlended;
+	RenderModelPtr dragon_;
+	SceneObjectPtr polygon_[2];
+
+	OITMod mod_ = DepthPeeling;
 
 	// Depth peeling
 	TexturePtr front_depth_tex_[2];

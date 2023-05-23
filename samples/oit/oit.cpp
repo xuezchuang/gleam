@@ -16,23 +16,38 @@
 #include <boost/lexical_cast.hpp>
 #include <GLFW/glfw3.h>
 
+#include "glm/gtc/matrix_transform.hpp"
+
 #include <render/ogl_util.h>
 
 float ALPHA_VALUE = 0.5f;;
+#define TESTSIMPLE
+//#define USE11OBJ
+#ifdef 	TESTSIMPLE
+static bool btestSimple = true;
+#else
+static bool btestSimple = false;
+#endif
+
+
+#ifdef 	USE11OBJ
+static bool buse11OBJ = true;
+#else
+static bool buse11OBJ = false;
+#endif
+
+enum OITStatus
+{
+	PeelingInit,
+	PeelingPeel,
+	//PeelingBlend,
+	//PeelingFinal,
+
+	WeightedBlendedBlend,
+};
 
 class RenderPolygon : public Mesh
 {
-public:
-	enum OITStatus
-	{
-		PeelingInit,
-		PeelingPeel,
-		//PeelingBlend,
-		//PeelingFinal,
-
-		WeightedBlendedBlend,
-	};
-
 public:
 	RenderPolygon(const std::string& name, const RenderModelPtr& model) : Mesh(name, model)
 	{
@@ -42,7 +57,7 @@ public:
 		{
 			peeling_init_tech_ = oit_effect_->GetTechniqueByName("PeelingInitTech");
 			peeling_peel_tech_ = oit_effect_->GetTechniqueByName("PeelingPeelTech");
-			weighted_blended_blend_tech_ = oit_effect_->GetTechniqueByName("WeightedBlendedBlendTech");
+			weighted_blended_blend_tech_ = oit_effect_->GetTechniqueByName("Test");
 		}
 
 		effect_attrib_ = EA_Transparency;
@@ -62,10 +77,10 @@ public:
 
 		switch (status_)
 		{
-		case RenderPolygon::PeelingPeel:
+		case PeelingPeel:
 			*(shader->GetSamplerByName("depth_tex")) = depth_tex_;
 			break;
-		case RenderPolygon::WeightedBlendedBlend:
+		case WeightedBlendedBlend:
 			*(shader->GetUniformByName("depth_scale")) = 0.5f;
 			break;
 		default:
@@ -80,13 +95,13 @@ public:
 		RenderTechnique *tech = nullptr;
 		switch (status)
 		{
-		case RenderPolygon::PeelingInit:
+		case PeelingInit:
 			tech = peeling_init_tech_;
 			break;
-		case RenderPolygon::PeelingPeel:
+		case PeelingPeel:
 			tech = peeling_peel_tech_;
 			break;
-		case RenderPolygon::WeightedBlendedBlend:
+		case WeightedBlendedBlend:
 			tech = weighted_blended_blend_tech_;
 			break;
 		default:
@@ -105,18 +120,162 @@ public:
 private:
 	RenderEffectPtr oit_effect_;
 
-	static RenderTechnique *peeling_init_tech_;
-	static RenderTechnique *peeling_peel_tech_;
-	static RenderTechnique *weighted_blended_blend_tech_;
+	RenderTechnique *peeling_init_tech_ = nullptr;
+	RenderTechnique *peeling_peel_tech_ = nullptr;
+	RenderTechnique *weighted_blended_blend_tech_ = nullptr;
 
 	OITStatus status_;
 	TexturePtr depth_tex_;
 };
 
-RenderTechnique *RenderPolygon::peeling_init_tech_ = nullptr;
-RenderTechnique *RenderPolygon::peeling_peel_tech_ = nullptr;
-RenderTechnique *RenderPolygon::weighted_blended_blend_tech_ = nullptr;
+class RenderTriangle : public RenderableHelper
+{
+public:
+	RenderTriangle()
+	{
+		RenderEngine& re = Context::Instance().RenderEngineInstance();
 
+		oit_effect_ = LoadRenderEffect("oit.xml");
+
+		if(peeling_init_tech_ == nullptr)
+		{
+			peeling_init_tech_ = oit_effect_->GetTechniqueByName("PeelingInitTechTest");
+			peeling_peel_tech_ = oit_effect_->GetTechniqueByName("PeelingPeelTechTest");
+			weighted_blended_blend_tech_ = oit_effect_->GetTechniqueByName("Test");
+		}
+
+		effect_ = LoadRenderEffect("oit.xml");
+
+
+		glm::vec3 xyzs[] =
+		{
+			//glm::vec3(0, 0.8f,0),
+			//glm::vec3(0.7f,-0.8f,0),
+			//glm::vec3(-0.7f,-0.8f,0),
+
+			glm::vec3(0.8f,0.8f,0.0f),
+			glm::vec3(0.8f,-0.8f,0.0f),
+			glm::vec3(-0.8f,-0.8f,0.0f),
+			glm::vec3(-0.8f,0.8f,0.0f),
+		};
+		glm::vec3 xyzsNormal[] =
+		{
+			glm::vec3(0.0f,0.0f,1.0f),
+			glm::vec3(0.0f,0.0f,1.0f),
+			glm::vec3(0.0f,0.0f,1.0f),
+			glm::vec3(0.0f,0.0f,1.0f),
+		};
+		int index_xyz[] =
+		{
+			0,1,3,
+			1,2,3
+		};
+
+		layout_ = re.MakeRenderLayout();
+
+		GraphicsBufferPtr pos_vb = re.MakeVertexBuffer(BU_Static, EAH_GPU_Read | EAH_Immutable, sizeof(xyzs), xyzs);
+		GraphicsBufferPtr normal_GB = re.MakeVertexBuffer(BU_Static, EAH_GPU_Read | EAH_Immutable, sizeof(xyzsNormal), xyzsNormal);
+		GraphicsBufferPtr pos_ib = re.MakeIndexBuffer(BU_Static, EAH_GPU_Read | EAH_Immutable, sizeof(index_xyz), index_xyz);
+		layout_->BindVertexStream(pos_vb, VertexElement(VEU_Position, 0, EF_BGR32F));
+		layout_->BindVertexStream(normal_GB, VertexElement(VEU_Normal, 0, EF_BGR32F));
+		layout_->BindIndexStream(pos_ib, EF_R32UI);
+		layout_->TopologyType(TT_TriangleList);
+
+		effect_attrib_ = EA_Transparency;
+
+	}
+	void OnRenderBegin() override
+	{
+		Framework3D &app = Context::Instance().FrameworkInstance();
+		Camera& camera = app.ActiveCamera();
+		const ShaderObjectPtr& shader = technique_->GetShaderObject(*effect_);
+		*(shader->GetUniformByName("mvp")) = camera.ProjViewMatrix() * ModelMatrix();
+		glm::mat4 normal_matrix(glm::mat3(camera.ViewMatrix()));
+		*(shader->GetUniformByName("normal_matrix")) = normal_matrix;
+		*(shader->GetUniformByName("mcolor")) = color;
+
+		switch(status_)
+		{
+			case PeelingInit:
+				*(shader->GetUniformByName("mcolor")) = color;
+				break;
+			case PeelingPeel:
+				*(shader->GetSamplerByName("depth_tex")) = depth_tex_;
+				*(shader->GetUniformByName("alpha")) = ALPHA_VALUE;
+				break;
+			case WeightedBlendedBlend:
+				*(shader->GetUniformByName("depth_scale")) = 0.5f;
+				*(shader->GetUniformByName("alpha")) = ALPHA_VALUE;
+				break;
+			default:
+				break;
+		}
+
+		InputEngine& ie = Context::Instance().InputEngineInstance();
+		ie.Register([this]()
+		{
+			static Timer timer;
+			RenderEngine& re = Context::Instance().RenderEngineInstance();
+			WindowPtr window = re.GetWindow();
+			InputRecord& record = window->GetInputRecord();
+			float elapsed = timer.Elapsed();
+
+			if (elapsed < 0.1f) return;
+
+			if (record.keys[GLFW_KEY_SPACE])
+			{
+				ALPHA_VALUE += 0.1f;
+				if (ALPHA_VALUE > 1.01f)
+					ALPHA_VALUE = 0.1f;
+			}
+
+			timer.Restart();
+		});
+
+	}
+	void SetOitStatus(OITStatus status)
+	{
+		status_ = status;
+		RenderEffectPtr effect = oit_effect_;
+		RenderTechnique* tech = nullptr;
+		switch(status)
+		{
+			case PeelingInit:
+				tech = peeling_init_tech_;
+				break;
+			case PeelingPeel:
+				tech = peeling_peel_tech_;
+				break;
+			case WeightedBlendedBlend:
+				tech = weighted_blended_blend_tech_;
+				break;
+			default:
+				CHECK_INFO(false, "OIT status error.")
+					break;
+		}
+
+		BindRenderTechnique(effect, tech);
+	}
+
+	void SetDepthTex(const TexturePtr& depth_tex)
+	{
+		depth_tex_ = depth_tex;
+	}
+	void SetColor(glm::vec4 _color)
+	{
+		color = _color;
+	}
+public:
+	glm::vec4 color;
+	RenderEffectPtr oit_effect_;
+
+	RenderTechnique* peeling_init_tech_ = nullptr;
+	RenderTechnique* peeling_peel_tech_ = nullptr;
+	RenderTechnique* weighted_blended_blend_tech_ = nullptr;
+
+	OITStatus status_;
+	TexturePtr depth_tex_;
+};
 
 OIT::OIT(): Framework3D("OIT Sample.")
 {
@@ -128,17 +287,50 @@ void OIT::OnCreate()
 {
 	RenderEngine &re = Context::Instance().RenderEngineInstance();
 	re.BindFrameBuffer(FrameBufferPtr());
-	this->LookAt(glm::vec3(0, 0.125f, -0.25f), glm::vec3(0, 0.125f, 0));
-	this->Proj(0.1f, 100.0f);
-	controller_.AttachCamera(this->ActiveCamera());
-	controller_.SetScalers(0.005f, 0.01f);
 
-	dragon_ = LoadModel("dragon.obj", EAH_Immutable, CreateModelFunc<RenderModel>(), CreateMeshFunc<RenderPolygon>());
+	if(btestSimple)
+	{
+		polygon_[0] = std::make_shared<SceneObjectHelper>(std::make_shared<RenderTriangle>(), SOA_Cullable);
+		polygon_[1] = std::make_shared<SceneObjectHelper>(std::make_shared<RenderTriangle>(), SOA_Cullable);
+		checked_pointer_cast<RenderTriangle>(polygon_[0]->GetRenderable())->SetColor(glm::vec4(1.0, 0.0, 0.0, 0.6));
+		checked_pointer_cast<RenderTriangle>(polygon_[1]->GetRenderable())->SetColor(glm::vec4(0.0, 1.0, 0.0, 0.6));
 
-	SceneObjectHelperPtr dragon_so = std::make_shared<SceneObjectHelper>(dragon_, SOA_Cullable);
-	dragon_so->AddToSceneManager();
+		polygon_[0]->ModelMatrix(glm::mat4());
+		polygon_[0]->AddToSceneManager();
+		
+		glm::mat4 trans = glm::rotate(glm::mat4(), glm::radians(90.0f), glm::vec3(0.0, 1.0, 0.0));
+						   
+		polygon_[1]->ModelMatrix(trans);
+		polygon_[1]->AddToSceneManager();
 
-	//InitDepthPeeling();
+		this->LookAt(glm::vec3(2, 0, -2), glm::vec3(0, 0, 0));
+		this->Proj(0.1f, 100);
+		controller_.AttachCamera(this->ActiveCamera());
+		controller_.SetScalers(0.005f, 0.01f);
+	}
+	else
+	{
+		if(buse11OBJ)
+		{
+			dragon_ = LoadModel("11.obj", EAH_Immutable, CreateModelFunc<RenderModel>(), CreateMeshFunc<RenderPolygon>());
+			this->LookAt(glm::vec3(2, 0, -2), glm::vec3(0, 0, 0));
+			this->Proj(0.1f, 100.0f);
+			controller_.AttachCamera(this->ActiveCamera());
+			//controller_.SetScalers(0.005f, 0.01f);
+		}
+		else
+		{
+			 dragon_ = LoadModel("dragon.obj", EAH_Immutable, CreateModelFunc<RenderModel>(), CreateMeshFunc<RenderPolygon>());
+			 this->LookAt(glm::vec3(0, 0.125f, -0.25f), glm::vec3(0, 0.125f, 0));
+			 this->Proj(0.1f, 100.0f);
+			 controller_.AttachCamera(this->ActiveCamera());
+			 controller_.SetScalers(0.005f, 0.01f);
+		}
+		SceneObjectHelperPtr dragon_so = std::make_shared<SceneObjectHelper>(dragon_, SOA_Cullable);
+		dragon_so->AddToSceneManager();
+	}
+
+	InitDepthPeeling();
 	InitWeightedBlended();
 
 	this->RegisterAfterFrameFunc([this](float app_time, float frame_time) ->int 
@@ -184,7 +376,6 @@ void OIT::OnCreate()
 
 		if (record.keys[GLFW_KEY_E])
 		{
-
 			switch (mod_)
 			{
 			case OIT::DepthPeeling:
@@ -290,10 +481,19 @@ uint32_t OIT::DoUpdateDepthPeeling(uint32_t render_index)
 	else if (render_index == 1)
 	{
 		re.BindFrameBuffer(front_blender_fbo_);
-		dragon_->ForEachMeshes([](const MeshPtr &mesh) {
-			checked_pointer_cast<RenderPolygon>(mesh)
-				->SetOitStatus(RenderPolygon::OITStatus::PeelingInit);
-		});
+		if(btestSimple)
+		{
+			checked_pointer_cast<RenderTriangle>(polygon_[0]->GetRenderable())->SetOitStatus(OITStatus::PeelingInit);
+			checked_pointer_cast<RenderTriangle>(polygon_[1]->GetRenderable())->SetOitStatus(OITStatus::PeelingInit);
+		}
+		else
+		{
+			dragon_->ForEachMeshes([](const MeshPtr& mesh)
+			{
+				checked_pointer_cast<RenderPolygon>(mesh)->SetOitStatus(OITStatus::PeelingInit);
+			});
+		}
+
 		return UR_TransparencyOnly | UR_NeedFlush;
 	}
 	else
@@ -325,11 +525,24 @@ uint32_t OIT::DoUpdateDepthPeeling(uint32_t render_index)
 			re.CurrentFrameBuffer()->Clear(CBM_Color | CBM_Depth, black_color, 1.0f, 0);
 			queries_[currId]->Begin();
 
-			dragon_->ForEachMeshes([this, prevId](const MeshPtr &mesh) {
-				auto polygon = checked_pointer_cast<RenderPolygon>(mesh);
-				polygon->SetOitStatus(RenderPolygon::OITStatus::PeelingPeel);
-				polygon->SetDepthTex(front_depth_tex_[prevId]);
-			});
+			if(btestSimple)
+			{
+				checked_pointer_cast<RenderTriangle>(polygon_[0]->GetRenderable())->SetOitStatus(OITStatus::PeelingPeel);
+				checked_pointer_cast<RenderTriangle>(polygon_[0]->GetRenderable())->SetDepthTex(front_depth_tex_[prevId]);
+				checked_pointer_cast<RenderTriangle>(polygon_[1]->GetRenderable())->SetOitStatus(OITStatus::PeelingPeel);
+				checked_pointer_cast<RenderTriangle>(polygon_[1]->GetRenderable())->SetDepthTex(front_depth_tex_[prevId]);
+			}
+			else
+			{
+				dragon_->ForEachMeshes([this, prevId](const MeshPtr& mesh) 
+				{
+					auto polygon = checked_pointer_cast<RenderPolygon>(mesh);
+					polygon->SetOitStatus(OITStatus::PeelingPeel);
+					polygon->SetDepthTex(front_depth_tex_[prevId]);
+				});
+			}
+
+
 
 			return UR_TransparencyOnly | UR_NeedFlush;
 		}
@@ -361,10 +574,18 @@ uint32_t OIT::DoUpdateWeightedBlended(uint32_t render_index)
 	case 1:
 	{
 		re.BindFrameBuffer(accum_fbo_);
-		dragon_->ForEachMeshes([](const MeshPtr &mesh) {
-			checked_pointer_cast<RenderPolygon>(mesh)->SetOitStatus(RenderPolygon::OITStatus::WeightedBlendedBlend);
-		});
-
+		if(btestSimple)
+		{
+			checked_pointer_cast<RenderTriangle>(polygon_[0]->GetRenderable())->SetOitStatus(OITStatus::WeightedBlendedBlend);
+			checked_pointer_cast<RenderTriangle>(polygon_[1]->GetRenderable())->SetOitStatus(OITStatus::WeightedBlendedBlend);
+		}
+		else
+		{
+			dragon_->ForEachMeshes([](const MeshPtr& mesh)
+			{
+				checked_pointer_cast<RenderPolygon>(mesh)->SetOitStatus(OITStatus::WeightedBlendedBlend);
+			});
+		}
 		return UR_TransparencyOnly | UR_NeedFlush;
 	}
 	case 2:

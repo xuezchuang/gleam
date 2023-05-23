@@ -267,7 +267,7 @@ namespace gleam {
 
 		uint32_t max_vertex_streams = 16; // 16 is supported in almost all gpu support OpenGL 4.5
 		std::vector<char> used_streams(max_vertex_streams, 0);
-		for (uint32_t i = 0; i < this->NumVertexStreams(); ++i)
+		for (uint32_t i = 0; i < this->NumVertexStreams(); ++i)//vertex_streams_
 		{
 			OGLGraphicsBuffer &stream = *checked_pointer_cast<OGLGraphicsBuffer>(this->GetVertexStream(i));
 			const uint32_t size = this->VertexSize(i);
