@@ -4,13 +4,14 @@
 
 	<shader type="vertex_shader" name="TriangleVS">
     <attrib name="pos" usage="position"/>
+	<uniform type="mat4" name="mvp"/>
     <code>
       <![CDATA[
 in vec4 pos;
-      
+uniform mat4 mvp;      
 void main()
 {
-  gl_Position = pos;
+  gl_Position = mvp * pos;
 }
       ]]>
     </code>

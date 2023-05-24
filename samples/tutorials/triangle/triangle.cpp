@@ -15,6 +15,10 @@ namespace gleam {
 			effect_ = LoadRenderEffect("triangle.xml");
 			technique_ = effect_->GetTechniqueByName("Triangle");
 
+			const ShaderObjectPtr& shader = technique_->GetShaderObject(*effect_);
+			glm::mat4 model = glm::scale(glm::mat4(), glm::vec3(0.5));
+			*(shader->GetUniformByName("mvp")) = model;
+
 			glm::vec3 xyzs[] =
 			{
 				//glm::vec3(0, 0.8f,0),
@@ -53,6 +57,8 @@ namespace gleam {
 		
 		polygon_->ModelMatrix(glm::mat4());
 		polygon_->AddToSceneManager();
+
+
 
 		//this->LookAt(glm::vec3(2, 0, -2), glm::vec3(0, 0, 0));
 		//this->LookAt(glm::vec3(2, -2, -2), glm::vec3(0, 0, 0));

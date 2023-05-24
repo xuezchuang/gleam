@@ -337,6 +337,8 @@ namespace gleam {
 				|| (cur_blend_state.src_blend_alpha[i] != blend_state_.src_blend_alpha[i])
 				|| (cur_blend_state.dest_blend_alpha[i] != blend_state_.dest_blend_alpha[i]))
 			{
+				//glBlendFuncSeparatei(buffer, GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+				//glBlendFuncSeparatei(buffer, ABF_Src_Alpha, ABF_Inv_Src_Alpha, ABF_One, ABF_Inv_Src_Alpha);
 				glBlendFuncSeparatei(i, ogl_src_blend_[i], ogl_dest_blend_[i],
 					ogl_src_blend_alpha_[i], ogl_dest_blend_alpha_[i]);
 			}

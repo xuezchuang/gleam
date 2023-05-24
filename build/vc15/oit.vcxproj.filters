@@ -31,5 +31,11 @@
     <Xml Include="..\..\samples\oit\oit_pp.xml">
       <Filter>资源文件</Filter>
     </Xml>
+    <Xml Include="..\..\samples\oit\oit_simple.xml">
+      <Filter>资源文件</Filter>
+    </Xml>
+    <Xml Include="..\..\samples\oit\oit_pp_simple.xml">
+      <Filter>资源文件</Filter>
+    </Xml>
   </ItemGroup>
 </Project>
