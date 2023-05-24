@@ -61,7 +61,6 @@ void main(void)
 
 	<!--  Ordinary Trans -->
 	<!-- 设置为glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);-->
-
 	<shader type="vertex_shader" name="BaseOrdinaryVS">
 		<attrib  name="pos" usage="position"/>
 		<uniform type="mat4" name="mvp"/>
@@ -106,7 +105,7 @@ void main(void)
 	</technique>
 
 	<!--Depth Peeling OIT-->
-
+	
 	<shader type="fragment_shader" name="FrontPeelingInitFS">
 		<uniform type="vec4" name="color"/>
 		<code>
@@ -142,13 +141,14 @@ void main(void)
     // Bit-exact comparison between FP32 z-buffer and fragment depth
     vec2 frontUV = gl_FragCoord.xy / textureSize(depth_tex, 0);
     float frontDepth = texture(depth_tex, frontUV).r;
-    if (gl_FragCoord.z <= frontDepth) 
+    if (gl_FragCoord.z > frontDepth )
 	{
+		//FragColor = color;//vec4(1.0,1.0,0.0,1.0);
         discard;
     }
-    
-    // Shade all the fragments behind the z-buffer
-    FragColor = vec4(color.rgb * color.a, color.a);
+	// Shade all the fragments behind the z-buffer
+	FragColor = vec4(color.rgb * color.a, color.a);
+	
 }
 		]]>
 		</code>
@@ -185,7 +185,7 @@ void main(void)
 		<uniform type="vec3" name="bgColor"/>
 		<code>
 			<![CDATA[
-in vec2 UV;
+//in vec2 UV;
       
 uniform sampler2D tex;
 uniform vec3 bgColor;
@@ -194,11 +194,20 @@ out vec4 outColor;
 
 void main(void)
 {
-    vec4 frontColor = texture(tex, UV);
+    //vec4 frontColor = texture(tex, UV);
+	vec2 frontUV = gl_FragCoord.xy / textureSize(tex, 0);
+	vec4 frontColor = texture(tex, frontUV);
     float transmittance = frontColor.a;
-    outColor.rgb = frontColor.rgb;// + bgColor * transmittance;
+    outColor.rgb = vec3(0.0);//frontColor.rgb;// + bgColor * transmittance;
 	if(frontColor.a < 0.0001)
 		outColor.rgb = bgColor;
+	else if(frontColor.r > 0.999)
+		outColor.rgb = vec3(1.0,0.0,0.0);
+	else if(frontColor.r < 0.98)
+		outColor.rgb = vec3(1.0,1.0,0.0);
+	//else
+	//	outColor.rgb = vec3(0.0,0.0,1.0);
+
     outColor.a = 1.0;
 }
 	  ]]>
@@ -236,7 +245,7 @@ void main(void)
 
 	<technique name="PeelingFinalTech">
 		<state name="depth_enable" value="false"/>
-		<state name="vertex_shader" value="BaseTextureVS"/>
+		<state name="vertex_shader" value="BaseVS"/>
 		<state name="fragment_shader" value="FrontPeelingFinalFS"/>
 	</technique>
 

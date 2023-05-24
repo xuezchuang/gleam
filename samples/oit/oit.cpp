@@ -200,20 +200,18 @@ public:
 		Camera& camera = app.ActiveCamera();
 		const ShaderObjectPtr& shader = technique_->GetShaderObject(*effect_);
 		*(shader->GetUniformByName("mvp")) = camera.ProjViewMatrix()* ModelMatrix();
-		
-
+		*(shader->GetUniformByName("color")) = color;
 		switch(status_)
 		{
-			case Ordinary:
-			case PeelingInit:
-				*(shader->GetUniformByName("color")) = color;
-				break;
+			//case Ordinary:
+			//case PeelingInit:
+			//	*(shader->GetUniformByName("color")) = color;
+			//	break;
 			case PeelingPeel:
 				*(shader->GetSamplerByName("depth_tex")) = depth_tex_;
 				break;
 			case WeightedBlendedBlend:
 				*(shader->GetUniformByName("depth_scale")) = 0.5f;
-				*(shader->GetUniformByName("color")) = color;
 				break;
 			default:
 				break;
@@ -487,8 +485,14 @@ uint32_t OIT::DoUpdateDepthPeeling(uint32_t render_index)
 		//{
 		//	re.DefaultFrameBuffer()->Clear(CBM_Color | CBM_Depth, clear_color, 1.0f, 0);
 		//	front_blender_fbo_->Clear(CBM_Color | CBM_Depth, black_color, 1.0f, 0);
-		//	checked_pointer_cast<RenderTriangle>(polygon_[0]->GetRenderable())->SetOitStatus(OITStatus::Ordinary);
-		//	checked_pointer_cast<RenderTriangle>(polygon_[1]->GetRenderable())->SetOitStatus(OITStatus::Ordinary);
+		//	//for (int32_t i = 0; i < 2; ++i)
+		//	//{
+		//	//	front_fbo_[i]->Clear(CBM_Color | CBM_Depth, black_color, 1.0f, 0);
+		//	//}
+		//	//checked_pointer_cast<RenderTriangle>(polygon_[0]->GetRenderable())->SetOitStatus(OITStatus::Ordinary);
+		//	//checked_pointer_cast<RenderTriangle>(polygon_[1]->GetRenderable())->SetOitStatus(OITStatus::Ordinary);
+		//	checked_pointer_cast<RenderTriangle>(polygon_[0]->GetRenderable())->SetOitStatus(OITStatus::PeelingInit);
+		//	checked_pointer_cast<RenderTriangle>(polygon_[1]->GetRenderable())->SetOitStatus(OITStatus::PeelingInit);
 		//	re.BindFrameBuffer(front_blender_fbo_);
 		//	return UR_NeedFlush;
 		//}
@@ -502,16 +506,10 @@ uint32_t OIT::DoUpdateDepthPeeling(uint32_t render_index)
 			front_fbo_[i]->Clear(CBM_Color | CBM_Depth, black_color, 1.0f, 0);
 		}
 		re.BindFrameBuffer(front_blender_fbo_);
-		return UR_OpaqueOnly | UR_NeedFlush;
+		return UR_OpaqueOnly;
 	}
 	else if (render_index == 1)
 	{
-		//peel_final_pp_->InputTexture(0, front_color_blender_);
-		//peel_final_pp_->OutputTexture(0, TexturePtr());
-		//peel_final_pp_->SetParam("bgColor", glm::vec3(0.2f, 0.4f, 0.6f));
-		//peel_final_pp_->Render();
-		//return UR_Finished;
-
 		re.BindFrameBuffer(front_blender_fbo_);
 		if(btestSimple)
 		{
@@ -531,14 +529,21 @@ uint32_t OIT::DoUpdateDepthPeeling(uint32_t render_index)
 	else
 	{
 		//peel_final_pp_->InputTexture(0, front_color_blender_);
-		//peel_final_pp_->OutputTexture(0, TexturePtr());
-		//peel_final_pp_->SetParam("bgColor", glm::vec3(0.2f, 0.4f, 0.6f));
-		//peel_final_pp_->Render();
-		//return UR_Finished;
+		peel_final_pp_->InputTexture(0, front_depth_tex_[1]);
+		peel_final_pp_->OutputTexture(0, TexturePtr());
+		peel_final_pp_->SetParam("bgColor", glm::vec3(0.2f, 0.4f, 0.6f));
+		peel_final_pp_->Render();
+		return UR_Finished;
 
 		uint32_t currId = (render_index - 2) / 2 % 2;
 		uint32_t prevId = 1 - currId;
 		const bool peel_pass = (render_index - 2) % 2 == 0;
+
+		peel_final_pp_->InputTexture(0, front_depth_tex_[prevId]);
+		peel_final_pp_->OutputTexture(0, TexturePtr());
+		peel_final_pp_->SetParam("bgColor", glm::vec3(0.2f, 0.4f, 0.6f));
+		peel_final_pp_->Render();
+		return UR_Finished;
 
 		if (peel_pass)
 		{
@@ -560,8 +565,8 @@ uint32_t OIT::DoUpdateDepthPeeling(uint32_t render_index)
 			}
 
 			re.BindFrameBuffer(front_fbo_[currId]);
-			re.CurrentFrameBuffer()->Clear(CBM_Color | CBM_Depth, black_color, 1.0f, 0);
-			queries_[currId]->Begin();
+			//re.CurrentFrameBuffer()->Clear(CBM_Color | CBM_Depth, black_color,0.0f, 0);
+			//queries_[currId]->Begin();
 
 			if(btestSimple)
 			{
@@ -584,7 +589,15 @@ uint32_t OIT::DoUpdateDepthPeeling(uint32_t render_index)
 		}
 		else // blend pass
 		{
-			queries_[currId]->End();
+			//queries_[currId]->End();
+
+			peel_final_pp_->InputTexture(0, front_depth_tex_[currId]);
+			peel_final_pp_->OutputTexture(0, TexturePtr());
+			peel_final_pp_->SetParam("bgColor", glm::vec3(0.2f, 0.4f, 0.6f));
+			peel_final_pp_->Render();
+			return UR_Finished;
+
+			
 
 			peel_blend_pp_->InputTexture(0, front_color_tex_[currId]);
 			peel_blend_pp_->OutputTexture(0, front_color_blender_);
