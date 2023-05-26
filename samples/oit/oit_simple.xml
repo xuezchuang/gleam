@@ -141,7 +141,7 @@ void main(void)
     // Bit-exact comparison between FP32 z-buffer and fragment depth
     vec2 frontUV = gl_FragCoord.xy / textureSize(depth_tex, 0);
     float frontDepth = texture(depth_tex, frontUV).r;
-    if (gl_FragCoord.z > frontDepth )
+    if (gl_FragCoord.z <= frontDepth + 0.0000000001)
 	{
 		//FragColor = color;//vec4(1.0,1.0,0.0,1.0);
         discard;
@@ -162,7 +162,7 @@ void main(void)
 		</uniform>
 		<code>
 			<![CDATA[
-in vec2 UV;
+//in vec2 UV;
       
 uniform sampler2D tex;
 
@@ -170,7 +170,9 @@ out vec4 FragColor;
 
 void main(void)
 {
-    FragColor = texture(tex, UV);
+	vec2 frontUV = gl_FragCoord.xy / textureSize(tex, 0);
+	FragColor = texture(tex, frontUV);
+    //FragColor = texture(tex, UV);
 }
 		]]>
 		</code>
@@ -198,16 +200,9 @@ void main(void)
 	vec2 frontUV = gl_FragCoord.xy / textureSize(tex, 0);
 	vec4 frontColor = texture(tex, frontUV);
     float transmittance = frontColor.a;
-    outColor.rgb = vec3(0.0);//frontColor.rgb;// + bgColor * transmittance;
+    outColor.rgb = frontColor.rgb;// + bgColor * transmittance;
 	if(frontColor.a < 0.0001)
 		outColor.rgb = bgColor;
-	else if(frontColor.r > 0.999)
-		outColor.rgb = vec3(1.0,0.0,0.0);
-	else if(frontColor.r < 0.98)
-		outColor.rgb = vec3(1.0,1.0,0.0);
-	//else
-	//	outColor.rgb = vec3(0.0,0.0,1.0);
-
     outColor.a = 1.0;
 }
 	  ]]>
@@ -239,7 +234,7 @@ void main(void)
 		<state name="dest_blend" value="one"/>
 		<state name="src_blend_alpha" value="zero"/>
 		<state name="dest_blend_alpha" value="inv_src_alpha"/>
-		<state name="vertex_shader" value="BaseTextureVS"/>
+		<state name="vertex_shader" value="BaseVS"/>
 		<state name="fragment_shader" value="FrontPeelingBlendFS"/>
 	</technique>
 
